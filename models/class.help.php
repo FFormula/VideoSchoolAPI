@@ -12,7 +12,8 @@ class help extends model
     /** Return current version of API */
     public function api_version ()
     {
-        $this -> shared -> done ("0.2");
+        $this -> answer = "0.2";
+        $this -> done ();
     }
     
     /** Return list of all methods */
@@ -27,7 +28,7 @@ class help extends model
             $class_name = $matches [1];
             $this -> getClassInfo ($class_name);
         }
-        $this -> shared -> done ($this -> answer);
+        $this -> done ();
     }
 
     /** Collect docs-info for each method
