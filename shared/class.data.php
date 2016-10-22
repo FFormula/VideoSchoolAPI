@@ -43,8 +43,8 @@ class Data
     {
         if (!isset ($_GET ["data"]))
         {
-            $this -> model  = $this -> shared -> config -> get ("data", "default_model");
-            $this -> action = $this -> shared -> config -> get ("data", "default_action");
+            $this -> model  = DATA_DEFAULT_MODEL;
+            $this -> action = DATA_DEFAULT_ACTION;
             return;
         }
         $route = trim ($_GET ["data"], '\\/');
