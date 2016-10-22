@@ -16,7 +16,6 @@ class Shared
     
     function __construct ()
     {
-        $this -> error = new Error ($this);
         $this -> data = new Data ($this);
         $this -> db = new DB ($this);
     }
