@@ -1,5 +1,5 @@
 <?php
-    define ("ROOT", "D:\\phpstorm\\VideoSchool\\");
+    include "config.php";
     include ROOT . "shared/class.shared.php";
     
     $shared = new Shared ();

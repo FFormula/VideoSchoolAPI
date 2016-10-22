@@ -1,18 +1,13 @@
 <?php
 
 include ROOT . "shared/class.db.php";
-include ROOT . "shared/class.log.php";
 include ROOT . "shared/class.data.php";
 include ROOT . "shared/class.error.php";
-include ROOT . "shared/class.config.php";
 
 class Shared
 {
     /** @var DB - Class for MySQL database queries */
     public $db;
-
-    /** @var Log - Logging for all actions */
-    public $log;
 
     /** @var Data - parse and read Model/Action, get and post data */
     public $data;
@@ -20,23 +15,17 @@ class Shared
     /** @var Error - Errors handling */
     public $error;
 
-    /** @var Config - Load and retrive config data */
-    public $config;
-
     private $result;
     
     function __construct ()
     {
-        $this -> config = new Config ($this);
         $this -> error = new Error ($this);
         $this -> data = new Data ($this);
-        $this -> log = new Log ($this);
         $this -> db = new DB ($this);
     }
     
     public function init ()
     {
-        $this -> config -> load ();
         $this -> data -> parse_args ();
         $this -> db -> open ();
     }
