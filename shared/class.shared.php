@@ -2,7 +2,6 @@
 
 include ROOT . "shared/class.db.php";
 include ROOT . "shared/class.data.php";
-include ROOT . "shared/class.error.php";
 
 class Shared
 {
@@ -12,9 +11,7 @@ class Shared
     /** @var Data - parse and read Model/Action, get and post data */
     public $data;
 
-    /** @var Error - Errors handling */
-    public $error;
-
+    private $error = "no";
     private $result;
     
     function __construct ()
@@ -30,6 +27,18 @@ class Shared
         $this -> db -> open ();
     }
 
+    function fatal (Exception $ex)
+    {
+        $this -> error = $ex -> getMessage();
+        $this -> done ();
+    }
+
+    function error ($text)
+    {
+        $this -> error = $text;
+        $this -> done ();
+    }
+
     /** Finish work and prepare output
      * @param string $answer - resulted text/array
      */
@@ -37,7 +46,7 @@ class Shared
     {
         $this -> result ["model"]  = $this -> data -> model;
         $this -> result ["action"] = $this -> data -> action;
-        $this -> result ["error"]  = $this -> error -> get_error();
+        $this -> result ["error"]  = $this -> error;
         if ($answer != "")
             $this -> result ["answer"] = $answer;
     }

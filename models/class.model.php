@@ -10,28 +10,19 @@ abstract class model
         $this -> shared = $shared;
     }
     
-    protected function is_empty ($field, $error = "")
+    protected function is_empty ($field, $message = "")
     {
         if ($this -> shared -> data -> get ($field) != "")
             return false;
         if ($this -> shared -> data -> post ($field) != "")
             return false;
 
-        if ($error == "")
-            $error = "Param [$field] not set";
-        $this -> set_error ($error);
+        if ($message == "")
+            $message = "Param [$field] not set";
+        $this -> shared -> error ($message);
         return true;
     }
 
-    /**
-     * @param $error
-     */
-    protected function set_error ($error)
-    {
-        $this -> shared -> error -> set_error ($error);
-        $this -> answer = "";
-    }
-    
     public function done ()
     {
         $this -> shared -> done ($this -> answer);
@@ -43,13 +34,12 @@ abstract class model
         if ($action == "help/version") return true;
         if ($action == "help/index") return true;
         if ($action == "user/join") return true;
-        if ($this -> is_empty("key")) {
-            $this->set_error("Key not specified");
-            return false;
-        }
+        if ($this -> is_empty("key")) return false;
+
         if ($this -> shared -> data -> get ("key") == "123")
             return true;
-        $this -> set_error ("Key incorrect");
+
+        $this -> shared -> error ("Key incorrect");
         return false;
     }
 

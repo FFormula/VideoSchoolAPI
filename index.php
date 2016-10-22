@@ -26,8 +26,7 @@
     }
     catch (Exception $e) 
     {
-        $shared -> error -> set_fatal ($e);
-        $shared -> done ();
+        $shared -> fatal ($e);
     }
     
     $shared -> output ();

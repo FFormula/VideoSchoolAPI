@@ -7,8 +7,6 @@
 */
 class help extends model
 {
-    private $api_prefix = "api_";
-
     /** Return current version of API */
     public function api_version ()
     {
@@ -19,7 +17,7 @@ class help extends model
     /** Return list of all methods */
     public function api_index ()
     {
-        $dir = scandir("models/"); 
+        $dir = scandir(ROOT . "models/");
         $this -> answer = array ();
         foreach ($dir as $key => $file)
         {
@@ -36,15 +34,14 @@ class help extends model
      */
     private function getClassInfo ($class_name)
     {
-        include_once "models/class.$class_name.php";
+        include_once ROOT . "models/class.$class_name.php";
         $rc = new ReflectionClass($class_name);
 //      $info ["info"] = $rc -> getDocComment ();
         $info ["methods"] = array ();
         foreach ($rc -> getMethods () as $method)
-            if (substr($method -> name, 0, strlen ($this -> api_prefix)) == 
-                                                   $this -> api_prefix)
+            if (substr($method -> name, 0, strlen (HELP_API_PREFIX)) == HELP_API_PREFIX)
             {
-                $m = substr($method -> name, strlen ($this -> api_prefix));
+                $m = substr($method -> name, strlen (HELP_API_PREFIX));
                 $this -> answer [$class_name . "/" . $m] =
                     $rc -> getMethod ($method -> name) -> getDocComment ();
             }
