@@ -4,7 +4,7 @@ class Auth
 {
     private $shared;
     
-    function __counstruct ($shared)
+    function __construct ($shared)
     {
         $this -> shared = $shared;
     }

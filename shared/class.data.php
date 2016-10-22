@@ -3,52 +3,76 @@
 class Data
 {
     private $shared;
-    private $action;
-    private $model;
-    private $post;
+    public $action;
+    public $model;
+//  private $post; common array for both GET and POST data
     private $get;
+
+    private $data_parts;
     
-    function __counstruct ($shared)
+    function __construct ($shared)
     {
         $this -> shared = $shared;
-        $post = array ();
-        $get = array ();
+        $this -> post = array ();
+        $this -> get = array ();
     }
 
-    public function __get ($name)
+    public function get ($field)
     {
-        return isset ($this -> $name) ? $this -> $name : "";
+        if (isset ($this -> get [$field]))
+            return $this -> get [$field];
+        return "";
     }
-    
-    function parse ()
+
+    public function post ($field)
     {
-        if (!isset ($_GET ["route"]))
+        if (isset ($this -> post [$field]))
+            return $this -> post [$field];
+        return "";
+    }
+
+    /** Parse route, post and get arguments */
+    public function parse_args ()
+    {
+        $this -> parse_route();
+        $this -> parse_post();
+        $this -> parse_get();
+    }
+
+    private function parse_route ()
+    {
+        if (!isset ($_GET ["data"]))
         {
-            $this -> model = "help";
-            $this -> action = "index";
+            $this -> model  = $this -> shared -> config -> get ("data", "default_model");
+            $this -> action = $this -> shared -> config -> get ("data", "default_action");
             return;
         }
-        $route = isset ($_GET ["route"]) ? $_GET ["route"] : "";
-        
-        $route = trim ($route, '\\/');
-        $parts = explode ('/', $route);
-        
-        $this -> model = array_shift ($parts);
-        $this -> action = array_shift ($parts);
-        
-        if (is_array ($parts))
-        foreach ($parts as $part)
+        $route = trim ($_GET ["data"], '\\/');
+        $this -> data_parts = explode ('/', $route);
+
+        $this -> model = array_shift ($this -> data_parts);
+        $this -> action = array_shift ($this -> data_parts);
+    }
+
+    private function parse_post()
+    {
+        if (!is_array($_POST))
+            return;
+        foreach ($_POST as $key => $value)
+            $this -> get [$key] = addslashes($value);
+    }
+
+    private function parse_get()
+    {
+        if (!is_array ($this -> data_parts))
+            return;
+        foreach ($this -> data_parts as $part)
         {
             list ($field, $value) = explode ('=', $part);
             $this -> get [$field] = addslashes ($value);
         }
-        
-        if (is_array ($_POST))
-        foreach ($_POST as $key => $value)
-        {
-            $this -> post [$key] = addslashes ($value);
-        }
     }
+
 }
 
 ?>

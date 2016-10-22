@@ -12,7 +12,7 @@ class help extends model
     /** Return current version of API */
     public function api_version ()
     {
-        $this -> shared -> done (array ("version" => "0.1"));
+        $this -> shared -> done ("0.2");
     }
     
     /** Return list of all methods */
@@ -24,20 +24,19 @@ class help extends model
         {
             if (!preg_match ('/class\\.(.+)\\.php$/', $file, $matches))
                 continue;
-            $name = $matches [1];
-            if (in_array ($name, array ("model")))
-                continue;
-
-            $this -> getClassInfo ($name);
-
+            $class_name = $matches [1];
+            $this -> getClassInfo ($class_name);
         }
         $this -> shared -> done ($this -> answer);
     }
-    
-    private function getClassInfo ($name)
+
+    /** Collect docs-info for each method
+     * @param $class_name - Name of class to analyze
+     */
+    private function getClassInfo ($class_name)
     {
-        include_once "models/class.$name.php";
-        $rc = new ReflectionClass($name);
+        include_once "models/class.$class_name.php";
+        $rc = new ReflectionClass($class_name);
 //      $info ["info"] = $rc -> getDocComment ();
         $info ["methods"] = array ();
         foreach ($rc -> getMethods () as $method)
@@ -45,7 +44,7 @@ class help extends model
                                                    $this -> api_prefix)
             {
                 $m = substr($method -> name, strlen ($this -> api_prefix));
-                $this -> answer [$name . "/" . $m] = 
+                $this -> answer [$class_name . "/" . $m] =
                     $rc -> getMethod ($method -> name) -> getDocComment ();
             }
     }

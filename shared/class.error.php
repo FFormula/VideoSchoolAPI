@@ -11,17 +11,17 @@ class Error
         $this -> text = "ok";
     }
     
-    function setFatal ($ex)
+    function set_fatal ($ex)
     {
         $this -> text = $ex -> getMessage();
     }
     
-    function setError ($text)
+    function set_error ($text)
     {
         $this -> text = $text;
     }
     
-    function getError ()
+    function get_error ()
     {
         return $this -> text;
     }

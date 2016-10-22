@@ -7,7 +7,6 @@
 */
 class user extends model
 {
-
     /** Register new user account 
     * @param email - valid email
     * @param name - user name
@@ -16,10 +15,10 @@ class user extends model
     */
     public function api_join ()
     {
-        if ($this -> notset ("email")) return;
-        if ($this -> notset ("name")) return;
+        if ($this -> is_empty ("email")) return;
+        if ($this -> is_empty ("name")) return;
 
-        $this -> error ("Not done yet");
+        $this -> set_error ("Not done yet");
     }
     
     /** Checking access by key
@@ -28,8 +27,9 @@ class user extends model
     */
     public function api_login ()
     {
-        if ($this -> notset ("key")) return;
-        $this -> error ("Not done yet");
+        if ($this -> is_empty ("key")) return;
+
+        $this -> set_error ("Not done yet");
     }
 
 }
