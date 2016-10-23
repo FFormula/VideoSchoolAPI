@@ -1,6 +1,7 @@
 <?php
 
 include ROOT . "shared/class.db.php";
+include ROOT . "shared/class.auth.php";
 include ROOT . "shared/class.data.php";
 
 class Shared
@@ -11,19 +12,24 @@ class Shared
     /** @var Data - parse and read Model/Action, get and post data */
     public $data;
 
+    /** @var Auth - Check access and store all author information */
+    public $auth;
+
     private $error = "no";
     private $result;
     
     function __construct ()
     {
-        $this -> data = new Data ($this);
         $this -> db = new DB ($this);
+        $this -> data = new Data ($this);
+        $this -> auth = new Auth ($this);
     }
     
     public function init ()
     {
-        $this -> data -> parse_args ();
         $this -> db -> open ();
+        $this -> data -> parse_args ();
+        $this -> auth -> sign ();
     }
 
     function fatal (Exception $ex)
@@ -38,7 +44,7 @@ class Shared
         $this -> done ();
     }
 
-    /** Finish work and prepare output
+    /** Finish work and prepare answer for output
      * @param string $answer - resulted text/array
      */
     public function done ($answer = "")
@@ -49,7 +55,8 @@ class Shared
         if ($answer != "")
             $this -> result ["answer"] = $answer;
     }
-    
+
+    /** Print all data by default/specified format */
     public function output ()
     {
         echo "<pre>";

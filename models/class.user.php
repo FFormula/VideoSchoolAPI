@@ -22,13 +22,25 @@ class user extends model
     }
     
     /** Checking access by key
-    * @param key = md5(email . "/" . password)
+    * @param email
+    * @param passw
     */
     public function api_login ()
     {
-        if ($this -> is_empty ("key")) return;
+        if ($this -> is_empty ("email")) return;
+        if ($this -> is_empty ("passw")) return;
+        $nr = "1";
+        $key = $nr . "." . md5 (
+                        $this -> shared -> data -> get ("email") . "/" .
+                        $this -> shared -> data -> get ("passw"));
+        $this -> answer = array (
+            "key" => $key
+        );
+    }
 
-        $this -> answer = "User just logged in";
+    public function api_demo ()
+    {
+        $this -> answer = $this -> shared -> auth -> get ("id");
     }
 
 }
