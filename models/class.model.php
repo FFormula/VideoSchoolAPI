@@ -14,8 +14,6 @@ abstract class model
     {
         if ($this -> shared -> data -> get ($field) != "")
             return false;
-        if ($this -> shared -> data -> post ($field) != "")
-            return false;
 
         if ($message == "")
             $message = "Param [$field] not set";

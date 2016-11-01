@@ -24,13 +24,6 @@ class Data
         return "";
     }
 
-    public function post ($field)
-    {
-        if (isset ($this -> post [$field]))
-            return $this -> post [$field];
-        return "";
-    }
-
     /** Parse route, post and get arguments */
     public function parse_args ()
     {
@@ -74,5 +67,3 @@ class Data
     }
 
 }
-
-?>

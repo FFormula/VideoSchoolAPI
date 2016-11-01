@@ -5,7 +5,7 @@ class DB
     private $shared;
     protected $mi;
     
-    function __counstruct ($shared)
+    function __construct ($shared)
     {
         $this -> shared = $shared;
     }
