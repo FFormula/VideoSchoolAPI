@@ -30,6 +30,7 @@ class Data
         $this -> parse_route();
         $this -> parse_post();
         $this -> parse_get();
+        $this -> can_action();
     }
 
     private function parse_route ()
@@ -64,6 +65,34 @@ class Data
             list ($field, $value) = explode ('=', $part);
             $this -> get [$field] = addslashes ($value);
         }
+    }
+
+    private function can_action ()
+    {
+        if ($this -> model == "help") return;
+        if ($this -> model == "user" &&
+            $this -> action == "join") return;
+        $key = $this -> shared -> data -> get ("key");
+        if (!$key)
+            throw new Exception("Key param is required");
+        if (!$this -> auth ($key))
+            throw new Exception("Wrong key, access denied");
+    }
+
+    public function auth ($key)
+    {
+        list ($user_id, $md) = explode(".", $key);
+        $user = $this -> shared -> db -> select (
+            "SELECT id, email, name 
+               FROM user 
+              WHERE id = '$user_id' 
+                AND md5(concat(email, '/', password)) = '$md'");
+        if (@$user [0] ["id"] != $user_id)
+            return false;
+        $this -> get ["user_id"]    = $user [0] ["id"];
+        $this -> get ["user_email"] = $user [0] ["email"];
+        $this -> get ["user_name"]  = $user [0] ["name"];
+        return true;
     }
 
 }
