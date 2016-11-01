@@ -6,8 +6,6 @@
     try 
     {
         $shared -> init ();
-        if (!$shared -> auth -> can_action())
-            throw new Exception("Access denied");
 
         $model  = $shared -> data -> model;
         $action = "api_" . $shared -> data -> action;

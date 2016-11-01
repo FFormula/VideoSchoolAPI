@@ -81,12 +81,12 @@ class Data
 
     public function auth ($key)
     {
-        list ($user_id, $md) = explode(".", $key);
+        @list ($user_id, $pw) = explode(".", $key);
         $user = $this -> shared -> db -> select (
             "SELECT id, email, name 
                FROM user 
               WHERE id = '$user_id' 
-                AND md5(concat(email, '/', password)) = '$md'");
+                AND password = '$pw'");
         if (@$user [0] ["id"] != $user_id)
             return false;
         $this -> get ["user_id"]    = $user [0] ["id"];
