@@ -27,13 +27,8 @@ class Shared
     
     public function init ()
     {
-<<<<<<< HEAD
-        $this -> data -> parse_args ();
-=======
-        $this -> db -> open ();
         $this -> data -> parse_args ();
         $this -> auth -> sign ();
->>>>>>> 9efd4525db16c158d7e3fc3c9bf77a35c767762c
     }
 
     function fatal (Exception $ex)
@@ -48,12 +43,8 @@ class Shared
         $this -> done ();
     }
 
-<<<<<<< HEAD
     /** 
      * Finish work and prepare output
-=======
-    /** Finish work and prepare answer for output
->>>>>>> 9efd4525db16c158d7e3fc3c9bf77a35c767762c
      * @param string $answer - resulted text/array
      */
     public function done ($answer = "")
