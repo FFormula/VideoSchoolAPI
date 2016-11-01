@@ -28,6 +28,14 @@ class help extends model
         }
         $this -> done ();
     }
+    
+    /** Return current time from database */
+    public function api_now ()
+    {
+        $now = $this -> shared -> db -> scalar ("SELECT NOW()");
+        $this -> answer = $now;
+        $this -> done ();
+    }
 
     /** Collect docs-info for each method
      * @param $class_name - Name of class to analyze

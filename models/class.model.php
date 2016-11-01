@@ -33,6 +33,7 @@ abstract class model
         $action = $this -> shared -> data -> model . "/" . $this -> shared -> data -> action;
         if ($action == "help/version") return true;
         if ($action == "help/index") return true;
+        if ($action == "help/now") return true;
         if ($action == "user/join") return true;
         if ($this -> is_empty("key")) return false;
 

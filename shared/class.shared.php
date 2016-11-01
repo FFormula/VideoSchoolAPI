@@ -23,7 +23,6 @@ class Shared
     public function init ()
     {
         $this -> data -> parse_args ();
-        $this -> db -> open ();
     }
 
     function fatal (Exception $ex)
@@ -38,7 +37,8 @@ class Shared
         $this -> done ();
     }
 
-    /** Finish work and prepare output
+    /** 
+     * Finish work and prepare output
      * @param string $answer - resulted text/array
      */
     public function done ($answer = "")
