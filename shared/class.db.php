@@ -12,6 +12,7 @@ class DB
     
     /**
      * One-time connection to the database
+     * @throws Exception on error during connect to MySQL
      */
     protected function connect() 
     {
@@ -32,6 +33,7 @@ class DB
      *
      * @param $query The query string
      * @return mixed The result of the mysqli::query() function
+     * @throws Exception on MySQL error with query and error message
      */
     public function query ($query) 
     {
