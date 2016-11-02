@@ -1,31 +1,27 @@
 <?php
 
-abstract class model
+abstract class Module
 {
-    protected $shared;
+    protected $db;
+    protected $data;
     protected $answer;
         
-    function __construct (Shared $shared)
+    function __construct ()
     {
-        $this -> shared = $shared;
+
+    }
+
+    public function init ($db, $data)
+    {
+        $this -> db = $db;
+        $this -> data = $data;
+    }
+
+    public function get_answer ()
+    {
+        return $this -> answer;
     }
     
-    protected function is_empty ($field, $message = "")
-    {
-        if ($this -> shared -> data -> get ($field) != "")
-            return false;
-
-        if ($message == "")
-            $message = "Param [$field] not set";
-        $this -> shared -> error ($message);
-        return true;
-    }
-
-    public function done ()
-    {
-        $this -> shared -> done ($this -> answer);
-    }
-
     public function can_action ()
     {
         $action = $this -> shared -> data -> model . "/" . $this -> shared -> data -> action;
@@ -43,5 +39,3 @@ abstract class model
     }
 
 }
-
-?>

@@ -5,19 +5,18 @@
 * General info about this API
 * @author Jevgenij Volosatov
 */
-class help extends model
+class help extends Module
 {
     /** Return current version of API */
     public function api_version ()
     {
         $this -> answer = "0.2";
-        $this -> done ();
     }
     
     /** Return list of all methods */
     public function api_index ()
     {
-        $dir = scandir(ROOT . "models/");
+        $dir = scandir(ROOT . "module/");
         $this -> answer = array ();
         foreach ($dir as $key => $file)
         {
@@ -26,15 +25,13 @@ class help extends model
             $class_name = $matches [1];
             $this -> getClassInfo ($class_name);
         }
-        $this -> done ();
     }
     
     /** Return current time from database */
     public function api_now ()
     {
-        $now = $this -> shared -> db -> scalar ("SELECT NOW()");
+        $now = $this -> db -> scalar ("SELECT NOW()");
         $this -> answer = $now;
-        $this -> done ();
     }
 
     /** Collect docs-info for each method
@@ -42,7 +39,7 @@ class help extends model
      */
     private function getClassInfo ($class_name)
     {
-        include_once ROOT . "models/class.$class_name.php";
+        include_once ROOT . "module/class.$class_name.php";
         $rc = new ReflectionClass($class_name);
 //      $info ["info"] = $rc -> getDocComment ();
         $info ["methods"] = array ();

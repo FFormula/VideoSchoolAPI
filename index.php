@@ -1,32 +1,35 @@
 <?php
     include "config.php";
-    include ROOT . "shared/class.shared.php";
+    include ROOT . "system/class.db.php";
+    include ROOT . "system/class.data.php";
+    include ROOT . "system/class.module.php";
 
-    $shared = new Shared ();
-    try 
+    $db = new DB ();
+    $data = new Data ();
+
+    try
     {
-        $shared -> init ();
+        $data -> init ($db);
+        $module  = $data -> module;
+        $action = "api_" . $data -> action;
 
-        $model  = $shared -> data -> model;
-        $action = "api_" . $shared -> data -> action;
+        if (!is_file (ROOT . "module/class." . $module . ".php"))
+            throw new Exception ("Module [$module] not found");
 
-        if (!is_file (ROOT . "models/class." . $model . ".php"))
-        throw new Exception ("Model $model class not found");
+        include ROOT . "module/class." . $module . ".php";
+        $class = new $module ();
+        $class -> init ($db, $data);
 
-        include ROOT . "models/class.model.php";
-        include ROOT . "models/class." . $model . ".php";
-
-        $class = new $model ($shared);
         if (!is_callable (array ($class, $action)))
-            throw new Exception ("Model $model action $action not found");
+            throw new Exception ("Module [$module] action [$action] not found");
 
         $class -> $action ();
-
-        $class -> done ();
+        $data -> done ($class -> get_answer());
     }
-    catch (Exception $e) 
+    catch (Exception $e)
     {
-        $shared -> fatal ($e);
+        $data -> error ($e -> getMessage());
+        $data -> done ();
     }
-    
-    $shared -> output ();
+
+    $data -> output ();

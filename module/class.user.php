@@ -5,7 +5,7 @@
 * General info about this API
 * @author Jevgenij Volosatov
 */
-class user extends model
+class user extends Module
 {
     /** Register new user account 
     * @param email - valid email
@@ -14,11 +14,10 @@ class user extends model
     */
     public function api_join ()
     {
-        if ($this -> is_empty ("email")) return;
-        if ($this -> is_empty ("name")) return;
+        if (!$this -> data -> is_param ("email")) return;
+        if (!$this -> data -> is_param ("name")) return;
 
         $this -> answer = "User successfully not registered";
-        // $this -> error ("Not done yet");
     }
     
     /** Checking access by key
@@ -27,20 +26,16 @@ class user extends model
     */
     public function api_login ()
     {
-        if ($this -> is_empty ("email")) return;
-        if ($this -> is_empty ("passw")) return;
+        if (!$this -> data -> is_param ("email")) return;
+        if (!$this -> data -> is_param ("passw")) return;
         $nr = "1";
         $key = $nr . "." . md5 (
+                        $this -> db -> scalar ("SELECT DATE(NOW())") . "/" .
                         $this -> shared -> data -> get ("email") . "/" .
                         $this -> shared -> data -> get ("passw"));
         $this -> answer = array (
             "key" => $key
         );
-    }
-
-    public function api_demo ()
-    {
-        $this -> answer = $this -> shared -> auth -> get ("id");
     }
 
 }

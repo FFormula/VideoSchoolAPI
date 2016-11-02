@@ -2,12 +2,10 @@
 
 class DB
 {
-    private $shared;
     protected $mi;
     
-    function __construct ($shared)
+    function __construct ()
     {
-        $this -> shared = $shared;
     }
     
     /**
@@ -20,7 +18,7 @@ class DB
             return;
 
 //      echo "  host: " . DB_HOST . ", user: " . DB_USER . ", base: " . DB_BASE . ", " . DB_PASS;
-        $this -> mi = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_BASE);
+        $this -> mi = new MySQLi(DB_HOST, DB_USER, DB_PASS, DB_BASE);
 
         if ($this -> mi -> connect_errno)
             throw new Exception (
@@ -82,7 +80,4 @@ class DB
 
         return $res [0];
     }
-
 }
-
-?>
