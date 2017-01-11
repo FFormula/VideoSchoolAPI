@@ -13,6 +13,11 @@ class shop
         return $get;
     }
 
+    public function index_post ($get, $post)
+    {
+        return $post;
+    }
+
     public function open($get)
     {
         $packet = new packet ();
@@ -23,11 +28,11 @@ class shop
     public function insert($get)
     {
         $packet = new packet ();
-        $packet->set_row_field("packet_id", "bilife");
+        $packet->set_row_field("packet_id", $get["packet"]);
         $packet->set_row_field("name", "Бинарная жизнь");
-        $packet->set_row_field("info", "Описание");
+        $packet->set_row_field("info", $get["info"]);
         $packet->set_row_field("html", "<html>");
-        $packet->set_row_field("price", "100");
+        $packet->set_row_field("price", $get["price"]);
         $packet->insert();
         $data = "added";
         return $data;

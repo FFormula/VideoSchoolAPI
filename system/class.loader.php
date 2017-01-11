@@ -87,7 +87,7 @@ class loader
 
     private function init_get()
     {
-        foreach ($this -> data as $part)
+        foreach ($this->data as $part)
         {
             if (strpos($part, "=")) {
                 list ($param, $value) = explode('=', $part);

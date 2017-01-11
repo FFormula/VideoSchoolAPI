@@ -2,7 +2,7 @@
 /**
  * @author Jevgenij Volosatov
  */
-class packet extends subject
+class packet extends table
 {
     public function select ($packet_id)
     {

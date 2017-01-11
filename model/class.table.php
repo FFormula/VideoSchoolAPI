@@ -1,6 +1,6 @@
 <?php
 
-class subject
+class table
 {
     protected $db;
     protected $row;
