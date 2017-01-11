@@ -1,11 +1,13 @@
 <?php
 
-class DB
+class db extends singleton
 {
     protected $mi;
     
-    function __construct ()
+    protected function __construct ()
     {
+        parent::__construct();
+        $this -> connect ();
     }
     
     /**
@@ -35,17 +37,13 @@ class DB
      */
     public function query ($query) 
     {
-        $this -> connect();
-
         $result = $this -> mi -> query ($query);
-
         if (!$result)
             throw new Exception (
                         "Error during query: " . 
                         $this -> mi -> error . 
                         ". Query text: " . 
                         $query);
-
         return $result;
     }
 
@@ -57,13 +55,24 @@ class DB
      */
     public function select ($query) 
     {
-        $rows = array();
         $result = $this -> query ($query);
-
-        while ($row = $result -> fetch_assoc()) 
+        $rows = array();
+        while ($row = $result -> fetch_assoc())
             $rows[] = $row;
-
         return $rows;
+    }
+
+    /**
+     * Fetch single row from SELECT query
+     *
+     * @param $query The query string
+     * @return array database rows on success
+     */
+    public function select_row ($query)
+    {
+        $result = $this -> query ($query);
+        $row = $result -> fetch_assoc();
+        return $row;
     }
 
     /**
@@ -75,9 +84,7 @@ class DB
     public function scalar ($query) 
     {
         $result = $this -> query ($query);
-
         $res = $result -> fetch_array();
-
         return $res [0];
     }
 }

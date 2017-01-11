@@ -2,12 +2,14 @@
 
 class loader
 {
-    private $data;
-    private $class;
-    private $method;
-    private $get;
+    private $get; // all the get information
     private $post;
-    private $info;
+    private $data; // input from address bar
+    private $info = ""; // resulted array
+
+    private $class; // class to be used in API
+    private $method; // method to be called
+
 
     public function __construct()
     {
@@ -51,7 +53,12 @@ class loader
         $method = $this->method;
         if (!is_callable(array ($api, $method)))
             $method = DATA_DEFAULT_METHOD;
-        $this->info = $api->$method ();
+        if (count ($this->post) == 0)
+            $this->info = $api->$method ($this->get);
+        else {
+            $method_post = $method . "_post";
+            $this->info = $api->$method_post ($this->get, $this->post);
+        }
     }
 
     private function init_data ()
@@ -82,8 +89,12 @@ class loader
     {
         foreach ($this -> data as $part)
         {
-            @list ($param, $value) = explode ('=', $part);
-            $this -> get [$param] = addslashes ($value);
+            if (strpos($part, "=")) {
+                list ($param, $value) = explode('=', $part);
+                $this->get [$param] = addslashes($value);
+            } else {
+                $this->get [] = addslashes($part);
+            }
         }
     }
 

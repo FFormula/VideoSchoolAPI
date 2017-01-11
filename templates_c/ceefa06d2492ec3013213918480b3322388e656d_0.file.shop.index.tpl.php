@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-01-11 13:11:38
+/* Smarty version 3.1.30, created on 2017-01-11 14:24:17
   from "G:\GIT\VideoSchoolAPI\view\shop.index.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_587604da24aea6_75261737',
+  'unifunc' => 'content_587615e1225cc8_75762675',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ceefa06d2492ec3013213918480b3322388e656d' => 
     array (
       0 => 'G:\\GIT\\VideoSchoolAPI\\view\\shop.index.tpl',
-      1 => 1484129496,
+      1 => 1484133855,
       2 => 'file',
     ),
   ),
@@ -20,12 +20,12 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_587604da24aea6_75261737 (Smarty_Internal_Template $_smarty_tpl) {
+function content_587615e1225cc8_75762675 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <html>
 <body>
     <h1>Shop</h1>
-    <?php echo $_smarty_tpl->tpl_vars['info']->value[0];?>
+    <?php echo $_smarty_tpl->tpl_vars['info']->value['now'];?>
 
 </body>
 </html><?php }

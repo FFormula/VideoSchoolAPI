@@ -2,7 +2,7 @@
 
 class output
 {
-    private $mode = "smarty";
+    private $mode = "array";
     private $class;
     private $method;
     private $info;
@@ -38,7 +38,9 @@ class output
 
     private function done_array ()
     {
+        echo "<pre>";
         print_r($this->info);
+        echo "</pre>";
     }
 
     private function done_smarty ()
