@@ -14,11 +14,11 @@ class loader
     public function __construct()
     {
         $this->init_data();
-        $this->init_class();
-        $this->init_method();
         $this->init_get();
         $this->init_post();
+        $this->init_class();
         $this->load();
+        $this->init_method();
         $this->start();
     }
 
@@ -37,30 +37,6 @@ class loader
         return $this->info;
     }
 
-    private function load ()
-    {
-        $class = $this->class;
-        $file = ROOT . "api/api.$class.php";
-        if (!file_exists($file))
-            throw new Exception("Cannot load $class API, file $file not found.");
-        require_once $file;
-    }
-
-    private function start ()
-    {
-        $class = $this->class;
-        $api = new $class ();
-        $method = $this->method;
-        if (!is_callable(array ($api, $method)))
-            $method = DATA_DEFAULT_METHOD;
-        if (count ($this->post) == 0)
-            $this->info = $api->$method ($this->get);
-        else {
-            $method_post = $method . "_post";
-            $this->info = $api->$method_post ($this->get, $this->post);
-        }
-    }
-
     private function init_data ()
     {
         if (isset ($_GET [DATA_GET]))
@@ -69,21 +45,6 @@ class loader
             $this -> data = array ();
     }
 
-    private function init_class ()
-    {
-        if (isset ($this->data [0]))
-            $this->class = $this->data [0];
-        else
-            $this->class = DATA_DEFAULT_CLASS;
-    }
-
-    private function init_method ()
-    {
-        if (isset ($this->data [1]))
-            $this->method = $this->data [1];
-        else
-            $this->method = DATA_DEFAULT_METHOD;
-    }
 
     private function init_get()
     {
@@ -104,6 +65,44 @@ class loader
             return;
         foreach ($_POST as $key => $value)
             $this -> post [$key] = addslashes($value);
+    }
+
+    private function init_class ()
+    {
+        if (isset ($this->get [0]))
+            $this->class = $this->get [0];
+        else
+            $this->class = DATA_DEFAULT_CLASS;
+    }
+
+    private function load ()
+    {
+        $class = $this->class;
+        $file = ROOT . "api/api.$class.php";
+        if (!file_exists($file))
+            throw new Exception("Cannot load $class API, file $file not found.");
+        require_once $file;
+    }
+
+    private function init_method ()
+    {
+        if (isset ($this->data [1]))
+            $this->method = $this->data [1];
+        else
+            $this->method = DATA_DEFAULT_METHOD;
+        if (count ($this->post) > 0)
+            $this->method .= "_post";
+    }
+
+    private function start ()
+    {
+        $api = new $this->class ();
+        if (!is_callable(array ($api, $this->method)))
+            $this->method = DATA_DEFAULT_METHOD;
+        if (count ($this->post) > 0)
+            $this->info = $api->{$this->method} ($this->get, $this->post);
+        else
+            $this->info = $api->{$this->method} ($this->get);
     }
 
 }

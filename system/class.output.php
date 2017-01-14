@@ -2,7 +2,7 @@
 
 class output
 {
-    private $mode = "array";
+    private $mode = "smarty";
     private $class;
     private $method;
     private $info;
@@ -16,6 +16,8 @@ class output
 
     public function done ()
     {
+        $this->info["class"] = $this->class;
+        $this->info["method"] = $this->method;
         switch ($this->mode)
         {
             case "json" : return $this->done_json();
@@ -45,12 +47,23 @@ class output
 
     private function done_smarty ()
     {
-        require_once "lib/class.Smarty.php";
+        if ($this->redirect()) return;
+        require_once "lib/Smarty.class.php";
         $smart = new Smarty ();
         $smart->caching = false;
         $smart->debugging = false;
         $smart->template_dir = SMARTY_TEMPLATES_DIR;
         $smart->assign ("info", $this->info);
         $smart->display ($this->class . "." . $this->method . ".tpl");
+    }
+
+    private function redirect ()
+    {
+        if (!isset ($this->info["redirect"]))
+            return false;
+        $url = $this->info["redirect"];
+        @header ("Location: $url");
+        echo "<script> document.location = '$url'; </script>";
+        return true;
     }
 }
