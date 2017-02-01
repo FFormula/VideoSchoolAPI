@@ -1,15 +1,22 @@
 <?php
 
-class db extends singleton
+class db
 {
-    protected $mi;
-    
-    protected function __construct ()
+    private static $instance = null;
+    public static function getDB()
     {
-        parent::__construct();
+        if (!isset(static::$instance))
+            static::$instance = new db ();
+        return static::$instance;
+    }
+
+    private function __construct ()
+    {
         $this -> connect ();
     }
     
+    private $mi;
+
     /**
      * One-time connection to the database
      * @throws Exception on error during connect to MySQL

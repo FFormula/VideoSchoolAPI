@@ -24,7 +24,7 @@ class packet extends table
 
     public function select($packet_id)
     {
-        $this->row = $this->db->select_row (
+        $this->row = db::getDB()->select_row (
             "SELECT packet_id, name, info, html, price
                FROM packets
               WHERE packet_id = '" . $packet_id . "'");
@@ -32,7 +32,7 @@ class packet extends table
 
     public function insert()
     {
-        $this->db->query(
+        db::getDB()->query(
            "INSERT INTO packets
                SET packet_id = '" . $this->row["packet_id"] . "'");
         $this->update($this->row["packet_id"]);
@@ -40,7 +40,7 @@ class packet extends table
 
     public function update($packet_id)
     {
-        $this->db->query(
+        db::getDB()->query(
            "UPDATE packets
                SET name = '". $this->row["name"] . "',
                    info = '". $this->row["info"] . "', 

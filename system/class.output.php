@@ -2,7 +2,7 @@
 
 class output
 {
-    private $mode = "smarty";
+    private $mode = "array";
     private $class;
     private $method;
     private $info;

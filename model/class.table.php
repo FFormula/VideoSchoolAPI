@@ -2,12 +2,10 @@
 
 class table
 {
-    protected $db;
     protected $row;
 
     public function __construct()
     {
-        $this->db = db::getInstance();
     }
 
     public function get_row()
