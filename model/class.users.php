@@ -35,7 +35,7 @@ class users extends table
         if ($auth ["status"] != "open")
             return "user stopped";
         $this->row = $auth;
-        return "ok";
+        return "ok"; //
     }
 
     public function select_by_user ($user)
