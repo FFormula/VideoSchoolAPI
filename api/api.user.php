@@ -17,10 +17,10 @@ class user
     public function login ($get)
     {
         $user = new users ();
-        $id = $user->login($get["email"], $get["passw"]);
-        if (!$id)
-            return array ("error" => "Invalid email or password");
-        return array ("id" => $id);
+        $error = $user->login($get["email"], $get["passw"]);
+        if ($error == "ok")
+            return $user->get_row();
+        return array ("error" => $error);
     }
 
     public function show ($get)

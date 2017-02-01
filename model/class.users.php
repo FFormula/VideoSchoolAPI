@@ -25,14 +25,17 @@ class users extends table
     public function login ($email, $passw_raw)
     {
         $auth = db::getDB()->select_row (
-            "SELECT user_id, user, passw
+            "SELECT user_id, user, email, passw, master_id, status
                FROM users
               WHERE email = '$email'");
         if (!$auth ["user_id"])
-            return false;
-        if ($auth ["passw"] == $this->encrypt_password($auth["user"], $passw_raw))
-            return $auth ["user_id"];
-        return false;
+            return "email not found";
+        if ($auth ["passw"] != $this->encrypt_password($auth["user"], $passw_raw))
+            return "invalid password";
+        if ($auth ["status"] != "open")
+            return "user stopped";
+        $this->row = $auth;
+        return "ok";
     }
 
     public function select_by_user ($user)
