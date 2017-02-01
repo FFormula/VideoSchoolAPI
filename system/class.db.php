@@ -94,4 +94,9 @@ class db
         $res = $result -> fetch_array();
         return $res [0];
     }
+
+    public function insert_id ()
+    {
+        return $this -> mi -> insert_id;
+    }
 }

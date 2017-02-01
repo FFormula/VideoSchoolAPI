@@ -4,6 +4,11 @@
  */
 class users extends table
 {
+    public function users ()
+    {
+        $this->clear();
+    }
+
     public function clear()
     {
         $this->row = array
@@ -33,4 +38,15 @@ class users extends table
               WHERE user_id = '" . $user_id . "'");
     }
 
+    public function insert ()
+    {
+        db::getDB()->query(
+        "INSERT INTO users
+                 SET user = '" . $this->row["user"] .
+                "', email = '" . $this->row["email"] .
+                "', passw = '" . $this->row["passw"] .
+            "', master_id = '" . $this->row["master_id"] .
+               "', status = '" . $this->row["status"] . "'");
+        return db::getDB()->insert_id();
+    }
 }
