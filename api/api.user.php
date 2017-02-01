@@ -7,7 +7,7 @@ class user
         $user = new users ();
         $user->set_row_field("user", $get["user"]);
         $user->set_row_field("email", $get["email"]);
-        $user->set_row_field("passw", md5 ($get["user"] . "/" . $get["passw"]));
+        $user->set_row_field("passw", sha1 ($get["user"] . "/" . $get["passw"]));
         $user->set_row_field("master_id", $get["master_id"]);
         $user->set_row_field("status", "open");
         $id = $user->insert ();

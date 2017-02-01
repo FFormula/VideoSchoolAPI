@@ -1,8 +1,8 @@
 CREATE TABLE users (
-    user_id INT PRIMARY KEY,
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
     user VARCHAR(255), -- user screen name - [a-z0-9_.]
     email VARCHAR(99),
-    passw VARCHAR(32), -- md5 of password
+    passw VARCHAR(40), -- md5 of password
     master_id INT, -- invite user id
     status ENUM('open', 'stop'),
     FOREIGN KEY (master_id) REFERENCES users (user_id),

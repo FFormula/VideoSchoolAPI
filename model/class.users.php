@@ -33,7 +33,7 @@ class users extends table
     public function select_by_id ($user_id)
     {
         $this->row = db::getDB()->select_row (
-            "SELECT user_id, user, email, passw, master_id, status
+            "SELECT user_id, user, email, master_id, status
                FROM users 
               WHERE user_id = '" . $user_id . "'");
     }
