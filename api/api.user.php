@@ -1,11 +1,11 @@
 <?php
 
-class user
+class user extends api
 {
     public function join ($get)
     {
         $user = new users ();
-        $user->set_row_field("user", $get["user"]);
+        $user->set_row_field("name", $get["name"]);
         $user->set_row_field("email", $get["email"]);
         $user->set_row_field("passw_raw", $get["passw"]);
         $user->set_row_field("master_id", $get["master_id"]);
@@ -19,8 +19,11 @@ class user
         $user = new users ();
         $error = $user->login($get["email"], $get["passw"]);
         if ($error == "ok")
+        {
+            $_SESSION ["user"] = $user->get_row();
             return $user->get_row();
-        return array ("error" => $error);
+        }
+        return $this->error($error);
     }
 
     public function show ($get)
@@ -28,21 +31,24 @@ class user
         $user = new users ();
         if (isset ($get ["id"]))
             $user -> select_by_id($get ["id"]);
-        else if (isset ($get ["user"]))
-            $user -> select_by_user($get ["user"]);
+        else if (isset ($get ["name"]))
+            $user -> select_by_name($get ["name"]);
         else
             $user -> clear ();
         return $user -> get_row();
     }
 
-    public function edit ($get, $post)
+    public function edit ($get)
     {
-
+        $field = $get["field"];
+        $value = $get["value"];
+        $passw = $get["passw"];
+        $user = new user ();
     }
 
     public function logout ($get)
     {
-
+        unset ($_SESSION ["user"]);
     }
 
 }

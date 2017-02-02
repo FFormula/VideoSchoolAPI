@@ -1,6 +1,6 @@
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
-    user VARCHAR(255), -- user screen name - [a-z0-9_.]
+    name VARCHAR(255), -- user screen name - [a-z0-9_.]
     email VARCHAR(99),
     passw VARCHAR(40), -- md5 of password
     master_id INT, -- invite user id

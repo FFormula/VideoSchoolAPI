@@ -81,6 +81,7 @@ class loader
         $file = ROOT . "api/api.$class.php";
         if (!file_exists($file))
             throw new Exception("Cannot load $class API, file $file not found.");
+        require_once ROOT . "api/api.php";
         require_once $file;
     }
 

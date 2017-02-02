@@ -1,5 +1,5 @@
 {include file="head.tpl"}
 
-Version: {$info}
+{$info}
 
 {include file="tail.tpl"}
