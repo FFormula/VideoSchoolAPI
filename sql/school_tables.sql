@@ -6,7 +6,7 @@ CREATE TABLE users (
     password_hash VARCHAR(40), -- hash of password
     status ENUM('wait', 'open', 'stop'),
     FOREIGN KEY (master_id) REFERENCES users (user_id),
-    UNIQUE INDEX (user),
+    UNIQUE INDEX (name),
     UNIQUE INDEX (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

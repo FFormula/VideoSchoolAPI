@@ -8,6 +8,7 @@ class user extends api
 "User API functions list:
 /user/join - register new user
 /user/login - authorize by email and password
+/user/show - show logged user info
 /user/edit - edit user data
 /user/logout - sign out");
     }
@@ -95,19 +96,113 @@ When login is successful, an authorized cookie will be placed.");
 
     public function show ($get)
     {
-        if (!isset($_SESSION ["user"] ["user_id"]))
+        if (!($id = $this->my_user_id()))
             return $this->error("No login");
         $user = new users ();
-        $user->select($_SESSION["user"] ["user_id"]);
+        $user->select($id);
         return $user->get_row();
     }
 
     public function edit ($get)
     {
+        if (count($get) <= 2)
+            return $this->show_help(
+"Update one field in the user table
+[field] field name, one of: name, email, password
+[value] new value
+[password] confirm changes by current password");
+        if (!($id = $this->my_user_id()))
+            return $this->error("No login");
+        if (!isset($get["field"]))
+            return $this->error("[field] param does not set");
+        if (!isset($get["value"]))
+            return $this->error("[value] param does not set");
+        if (!isset($get["password"]))
+            return $this->error("[password] param does not set");
         $field = $get["field"];
         $value = $get["value"];
-        $passw = $get["passw"];
-        $user = new user ();
+        if ($field == "email" && !text::is_email($value))
+            return $this->error("[value] must be valid e-mail address");
+        if ($field == "password" && strlen($value) < 8)
+            return $this->error("[value] is too short");
+        if ($field == "password" && strlen($value) > 50)
+            return $this->error("[value] is too long");
+        $password = $get["password"];
+    }
+
+    public function edit_name ($get)
+    {
+        if (count($get) <= 2)
+            return $this->show_help(
+"Update name in the user table
+[value] new name
+[password] confirm changes by current password");
+        if (!($id = $this->my_user_id()))
+            return $this->error("No login");
+        if (!isset($get["value"]))
+            return $this->error("[value] param does not set");
+        if (!isset($get["password"]))
+            return $this->error("[password] param does not set");
+        $value = $get["value"];
+        if (!text::is_alpha($value))
+            return $this->error("[value] must be alphanumerical");
+        if (strlen($value) < 3)
+            return $this->error("[value] is too short");
+        if (strlen($value) > 20)
+            return $this->error("[value] is too long");
+        $password = $get["password"];
+        $user = new users ();
+        if ($user->update_name ($id, $value, $password))
+            return $this->message("ok");
+        return $this->error("name not changed");
+    }
+
+    public function edit_email ($get)
+    {
+        if (count($get) <= 2)
+            return $this->show_help(
+"Update email in the user table
+[value] new e-mail
+[password] confirm changes by current password");
+        if (!($id = $this->my_user_id()))
+            return $this->error("No login");
+        if (!isset($get["value"]))
+            return $this->error("[value] param does not set");
+        if (!isset($get["password"]))
+            return $this->error("[password] param does not set");
+        $value = $get["value"];
+        if (!text::is_email($value))
+            return $this->error("[value] must be a correct e-mail address");
+        $password = $get["password"];
+        $user = new users ();
+        if ($user->update_email ($id, $value, $password))
+            return $this->message("ok");
+        return $this->error("email not changed");
+    }
+
+    public function edit_password ($get)
+    {
+        if (count($get) <= 2)
+            return $this->show_help(
+"Change user password
+[value] new password
+[password] confirm changes by current password");
+        if (!($id = $this->my_user_id()))
+            return $this->error("No login");
+        if (!isset($get["value"]))
+            return $this->error("[value] param does not set");
+        if (!isset($get["password"]))
+            return $this->error("[password] param does not set");
+        $value = $get["value"];
+        if (strlen($value) < 8)
+            return $this->error("[value] is too short");
+        if (strlen($value) > 50)
+            return $this->error("[value] is too long");
+        $password = $get["password"];
+        $user = new users ();
+        if ($user->update_password ($id, $value, $password))
+            return $this->message("ok");
+        return $this->error("password not changed");
     }
 
     public function logout ($get)

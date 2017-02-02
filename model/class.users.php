@@ -56,7 +56,7 @@ class users extends table
     public function select ($user_id)
     {
         $this->row = db::getDB()->select_row (
-            "SELECT user_id, name, email, master_id, status
+            "SELECT user_id, master_id, name, email, password_hash, status
                FROM users 
               WHERE user_id = '" . $user_id . "'");
     }
@@ -80,4 +80,53 @@ class users extends table
     {
         return sha1 ($name . "/" . $passw);
     }
+
+    public function update_name ($user_id, $name, $password)
+    {
+        $this->select($user_id);
+        if (!$this->row["user_id"])
+            return false;
+        if ($this->row["password_hash"] != $this->encrypt_password($this->row["name"], $password))
+            return false;
+        $new_password_hash = $this->encrypt_password($name, $password);
+        db::getDB()->query (
+            "UPDATE users 
+                SET name = '$name',
+                    password_hash = '$new_password_hash'
+              WHERE user_id = '$user_id' 
+              LIMIT 1");
+        return true;
+    }
+
+    public function update_email ($user_id, $email, $password)
+    {
+        $this->select($user_id);
+        if (!$this->row["user_id"])
+            return false;
+        if ($this->row["password_hash"] != $this->encrypt_password($this->row["name"], $password))
+            return false;
+        db::getDB()->query (
+            "UPDATE users 
+                SET email = '$email'
+              WHERE user_id = '$user_id' 
+              LIMIT 1");
+        return true;
+    }
+
+    public function update_password ($user_id, $new_password, $old_password)
+    {
+        $this->select($user_id);
+        if (!$this->row["user_id"])
+            return false;
+        if ($this->row["password_hash"] != $this->encrypt_password($this->row["name"], $old_password))
+            return false;
+        $new_password_hash = $this->encrypt_password($this->row["name"], $new_password);
+        db::getDB()->query (
+            "UPDATE users 
+                SET password_hash = '$new_password_hash'
+              WHERE user_id = '$user_id' 
+              LIMIT 1");
+        return true;
+    }
+
 }

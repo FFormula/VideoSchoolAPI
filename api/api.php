@@ -22,4 +22,11 @@ class api
             "help" => $text
         );
     }
+
+    protected function my_user_id ()
+    {
+        if (!isset($_SESSION ["user"] ["user_id"]))
+            return false;
+        return $_SESSION ["user"] ["user_id"];
+    }
 }
