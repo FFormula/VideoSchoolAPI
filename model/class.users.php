@@ -25,7 +25,7 @@ class users extends table
     public function login ($email, $password)
     {
         $auth = db::getDB()->select_row (
-            "SELECT user_id, password_hash
+            "SELECT user_id, name, password_hash
                FROM users
               WHERE email = '$email'");
         if (!$auth ["user_id"])
@@ -63,6 +63,7 @@ class users extends table
 
     public function insert ()
     {
+        $this->row["status"] = "wait";
         $this->row["password_hash"] =
             $this->encrypt_password($this->row["name"], $this->row["password"]);
         db::getDB()->query(

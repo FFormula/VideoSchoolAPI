@@ -2,17 +2,24 @@
 
 class api
 {
-    protected function error ($message)
+    protected function message ($text)
     {
         return array (
-            "error" => $message
+            "message" => $text
         );
     }
 
-    protected function show_help ($message)
+    protected function error ($text)
     {
         return array (
-            "help" => $message
+            "error" => $text
+        );
+    }
+
+    protected function show_help ($text)
+    {
+        return array (
+            "help" => $text
         );
     }
 }

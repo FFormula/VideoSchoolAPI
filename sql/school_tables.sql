@@ -9,3 +9,10 @@ CREATE TABLE users (
     UNIQUE INDEX (user),
     UNIQUE INDEX (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO users
+   SET master_id = NULL,
+       name = 'system',
+       email = 'system@videosharp.info',
+       password_hash = '',
+       status = 'stop';

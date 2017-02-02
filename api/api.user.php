@@ -54,7 +54,7 @@ class user extends api
         $user->set_row_field("name", $get["name"]);
         $user->set_row_field("email", $get["email"]);
         $user->set_row_field("password", $get["password"]);
-        $user->set_row_field("master_id", $get["master_id"]);
+        $user->set_row_field("master_id", $master_id);
         $id = $user->insert ();
         return array ("id" => $id);
     }
@@ -74,6 +74,8 @@ When login is successful, an authorized cookie will be placed.");
             return $this->error("[email] incorrect, provide correct e-mail address");
         if (!$user->find_id_by_email($get["email"]))
             return $this->error("[email] this e-mail not found");
+        if (!isset ($get ["password"]))
+            return $this->error("[password] field does not set");
         $user_id = $user->login($get["email"], $get["password"]);
         if (!$user_id)
             return $this->error("[password] incorrect password");
@@ -93,7 +95,7 @@ When login is successful, an authorized cookie will be placed.");
 
     public function show ($get)
     {
-        if (!$_SESSION ["user"] ["user_id"])
+        if (!isset($_SESSION ["user"] ["user_id"]))
             return $this->error("No login");
         $user = new users ();
         $user->select($_SESSION["user"] ["user_id"]);
@@ -111,6 +113,7 @@ When login is successful, an authorized cookie will be placed.");
     public function logout ($get)
     {
         unset ($_SESSION ["user"]);
+        return $this->message("Logged out");
     }
 
 }
