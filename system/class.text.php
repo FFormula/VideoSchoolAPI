@@ -11,4 +11,9 @@ class text
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
+
+    public static function is_number ($number)
+    {
+        return preg_match("/^\d+$/", $number);
+    }
 }

@@ -78,8 +78,9 @@ class db
     public function select_row ($query)
     {
         $result = $this -> query ($query);
-        $row = $result -> fetch_assoc();
-        return $row;
+        if (mysqli_num_rows($result) == 0)
+            return false;
+        return $result -> fetch_assoc();
     }
 
     /**
@@ -91,6 +92,8 @@ class db
     public function scalar ($query) 
     {
         $result = $this -> query ($query);
+        if (mysqli_num_rows($result) == 0)
+            return false;
         $res = $result -> fetch_array();
         return $res [0];
     }
