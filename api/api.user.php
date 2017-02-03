@@ -103,33 +103,6 @@ When login is successful, an authorized cookie will be placed.");
         return $user->get_row();
     }
 
-    public function edit ($get)
-    {
-        if (count($get) <= 2)
-            return $this->show_help(
-"Update one field in the user table
-[field] field name, one of: name, email, password
-[value] new value
-[password] confirm changes by current password");
-        if (!($id = $this->my_user_id()))
-            return $this->error("No login");
-        if (!isset($get["field"]))
-            return $this->error("[field] param does not set");
-        if (!isset($get["value"]))
-            return $this->error("[value] param does not set");
-        if (!isset($get["password"]))
-            return $this->error("[password] param does not set");
-        $field = $get["field"];
-        $value = $get["value"];
-        if ($field == "email" && !text::is_email($value))
-            return $this->error("[value] must be valid e-mail address");
-        if ($field == "password" && strlen($value) < 8)
-            return $this->error("[value] is too short");
-        if ($field == "password" && strlen($value) > 50)
-            return $this->error("[value] is too long");
-        $password = $get["password"];
-    }
-
     public function edit_name ($get)
     {
         if (count($get) <= 2)
@@ -208,7 +181,8 @@ When login is successful, an authorized cookie will be placed.");
     public function logout ($get)
     {
         unset ($_SESSION ["user"]);
-        return $this->message("Logged out");
+        //return $this->message("Logged out");
+        return array ("redirect" => "/");
     }
 
 }
