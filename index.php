@@ -2,6 +2,6 @@
     include "config.php";
     include "header.php";
 
-    $loader = new loader ();
-    $output = new output ($loader);
+    $loader = new \system\loader ();
+    $output = new \system\output ($loader);
     $output->done ();

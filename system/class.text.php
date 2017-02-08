@@ -1,5 +1,7 @@
 <?php
 
+namespace system;
+
 class text
 {
     public static function is_alpha ($text)

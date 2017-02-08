@@ -9,7 +9,7 @@ class head
     public $keywords;
     public $image;
 
-    function divs_head ($title)
+    function __construct ($title)
     {
         $this->title = $title;
         $this->description = "my description";

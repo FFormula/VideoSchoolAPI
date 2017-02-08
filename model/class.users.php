@@ -1,7 +1,7 @@
 <?php
-/**
- * @author Jevgenij Volosatov
- */
+
+namespace model;
+
 class users extends table
 {
     public function users ()
@@ -24,7 +24,7 @@ class users extends table
 
     public function login ($email, $password)
     {
-        $auth = db::getDB()->select_row (
+        $auth = db()->select_row (
             "SELECT user_id, name, password_hash
                FROM users
               WHERE email = '$email'");
@@ -37,7 +37,7 @@ class users extends table
 
     public function find_id_by_name ($name)
     {
-        $user_id = db::getDB()->scalar (
+        $user_id = db()->scalar (
             "SELECT user_id
                FROM users 
               WHERE name = '" . $name . "'");
@@ -46,7 +46,7 @@ class users extends table
 
     public function find_id_by_email ($email)
     {
-        $user_id = db::getDB()->scalar (
+        $user_id = db()->scalar (
             "SELECT user_id
                FROM users 
               WHERE email = '" . $email . "'");
@@ -55,7 +55,7 @@ class users extends table
 
     public function select ($user_id)
     {
-        $this->row = db::getDB()->select_row (
+        $this->row = db()->select_row (
             "SELECT user_id, master_id, name, email, password_hash, status
                FROM users 
               WHERE user_id = '" . $user_id . "'");
@@ -66,14 +66,14 @@ class users extends table
         $this->row["status"] = "wait";
         $this->row["password_hash"] =
             $this->encrypt_password($this->row["name"], $this->row["password"]);
-        db::getDB()->query(
+        db()->query(
         "INSERT INTO users
                  SET name = '" . $this->row["name"] .
                 "', email = '" . $this->row["email"] .
         "', password_hash = '" . $this->row["password_hash"] .
             "', master_id = '" . $this->row["master_id"] .
                "', status = '" . $this->row["status"] . "'");
-        return db::getDB()->insert_id();
+        return db()->insert_id();
     }
 
     protected function encrypt_password ($name, $passw)
@@ -89,7 +89,7 @@ class users extends table
         if ($this->row["password_hash"] != $this->encrypt_password($this->row["name"], $password))
             return false;
         $new_password_hash = $this->encrypt_password($name, $password);
-        db::getDB()->query (
+        db()->query (
             "UPDATE users 
                 SET name = '$name',
                     password_hash = '$new_password_hash'
@@ -105,7 +105,7 @@ class users extends table
             return false;
         if ($this->row["password_hash"] != $this->encrypt_password($this->row["name"], $password))
             return false;
-        db::getDB()->query (
+        db()->query (
             "UPDATE users 
                 SET email = '$email'
               WHERE user_id = '$user_id' 
@@ -121,7 +121,7 @@ class users extends table
         if ($this->row["password_hash"] != $this->encrypt_password($this->row["name"], $old_password))
             return false;
         $new_password_hash = $this->encrypt_password($this->row["name"], $new_password);
-        db::getDB()->query (
+        db()->query (
             "UPDATE users 
                 SET password_hash = '$new_password_hash'
               WHERE user_id = '$user_id' 

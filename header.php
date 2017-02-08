@@ -8,14 +8,14 @@
 
     function __autoload ($class)
     {
-        $include_dirs = array ("model", "system");
-        foreach ($include_dirs as $dir)
-        {
-            $file = ROOT . $dir . "/class." . $class . ".php";
-            if (file_exists($file))
-            {
-                require_once $file;
-                return;
-            }
-        }
+        $path = explode ("\\", $class);
+        if (count ($path) != 2) return;
+        $file = ROOT . $path[0] . "/class." . $path[1] . ".php";
+        if (!file_exists($file)) return;
+        require_once $file;
+    }
+
+    function db()
+    {
+        return \system\db::getDB();
     }

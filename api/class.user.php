@@ -24,10 +24,10 @@ class user extends api
 [email] - valid unique user e-mail address
 [password] - user password, min length 8, max length 50
 [master] - inviter user name required");
-        $user = new users ();
+        $user = new \model\users ();
         if (!isset ($get ["name"]))
             return $this->error("[name] param does not set");
-        if (!text::is_alpha($get["name"]))
+        if (!\system\text::is_alpha($get["name"]))
             return $this->error("[name] incorrect, use only letters, digits, _ and .");
         if (strlen($get["name"]) < 3)
             return $this->error("[name] is too short");
@@ -37,7 +37,7 @@ class user extends api
             return $this->error("[name] user name already taken");
         if (!isset ($get ["email"]))
             return $this->error("[email] param does not set");
-        if (!text::is_email($get["email"]))
+        if (!\system\text::is_email($get["email"]))
             return $this->error("[email] incorrect, provide correct e-mail address");
         if ($user->find_id_by_email($get["email"]))
             return $this->error("[email] user email already registered");
@@ -49,7 +49,7 @@ class user extends api
             return $this->error("[password] is too long");
         if (!isset ($get ["master"]))
             return $this->error("[master] param does not set");
-        if (!text::is_alpha($get["master"]))
+        if (!\system\text::is_alpha($get["master"]))
             return $this->error("[master] incorrect, provide an inviter user name");
         $master_id = $user->find_id_by_name($get["master"]);
         if (!$master_id)
@@ -70,10 +70,10 @@ class user extends api
 [email] - user e-mail addresss
 [password] - user password
 When login is successful, an authorized cookie will be placed.");
-        $user = new users ();
+        $user = new \model\users ();
         if (!isset ($get ["email"]))
             return $this->error("[email] param does not set");
-        if (!text::is_email($get["email"]))
+        if (!\system\text::is_email($get["email"]))
             return $this->error("[email] incorrect, provide correct e-mail address");
         if (!$user->find_id_by_email($get["email"]))
             return $this->error("[email] this e-mail not found");
@@ -105,7 +105,7 @@ When login is successful, an authorized cookie will be placed.");
 
         if (!($id = $this->my_user_id()))
             return $this->error("No login");
-        $user = new users ();
+        $user = new \model\users ();
         $user->select($id);
         return $user->get_row();
     }
@@ -124,14 +124,14 @@ When login is successful, an authorized cookie will be placed.");
         if (!isset($get["password"]))
             return $this->error("[password] param does not set");
         $value = $get["value"];
-        if (!text::is_alpha($value))
+        if (!\system\text::is_alpha($value))
             return $this->error("[value] must be alphanumerical");
         if (strlen($value) < 3)
             return $this->error("[value] is too short");
         if (strlen($value) > 20)
             return $this->error("[value] is too long");
         $password = $get["password"];
-        $user = new users ();
+        $user = new \model\users ();
         if ($user->update_name ($id, $value, $password))
             return $this->message("ok");
         return $this->error("name not changed");
@@ -151,10 +151,10 @@ When login is successful, an authorized cookie will be placed.");
         if (!isset($get["password"]))
             return $this->error("[password] param does not set");
         $value = $get["value"];
-        if (!text::is_email($value))
+        if (!\system\text::is_email($value))
             return $this->error("[value] must be a correct e-mail address");
         $password = $get["password"];
-        $user = new users ();
+        $user = new \model\users ();
         if ($user->update_email ($id, $value, $password))
             return $this->message("ok");
         return $this->error("email not changed");
@@ -179,7 +179,7 @@ When login is successful, an authorized cookie will be placed.");
         if (strlen($value) > 50)
             return $this->error("[value] is too long");
         $password = $get["password"];
-        $user = new users ();
+        $user = new \model\users ();
         if ($user->update_password ($id, $value, $password))
             return $this->message("ok");
         return $this->error("password not changed");

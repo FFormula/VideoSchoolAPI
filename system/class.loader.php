@@ -1,5 +1,7 @@
 <?php
 
+namespace system;
+
 class loader
 {
     private $get; // all the get information
@@ -17,7 +19,6 @@ class loader
         $this->init_get();
         $this->init_post();
         $this->init_class();
-        $this->load();
         $this->init_method();
         $this->start();
     }
@@ -70,19 +71,9 @@ class loader
     private function init_class ()
     {
         if (isset ($this->get [0]))
-            $this->class = $this->get [0];
+            $this->class = "\\api\\" . $this->get [0];
         else
-            $this->class = DATA_DEFAULT_CLASS;
-    }
-
-    private function load ()
-    {
-        $class = $this->class;
-        $file = ROOT . "api/api.$class.php";
-        if (!file_exists($file))
-            throw new Exception("Cannot load $class API, file $file not found.");
-        require_once ROOT . "api/api.php";
-        require_once $file;
+            $this->class = "\\api\\" . DATA_DEFAULT_CLASS;
     }
 
     private function init_method ()

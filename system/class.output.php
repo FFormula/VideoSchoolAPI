@@ -1,8 +1,10 @@
 <?php
 
+namespace system;
+
 class output
 {
-    private $mode = "smarty";
+    private $mode = "array";
     private $class;
     private $method;
     private $info;
@@ -49,7 +51,7 @@ class output
     {
         if ($this->redirect()) return;
         require_once "lib/Smarty.class.php";
-        $smart = new Smarty ();
+        $smart = new \Smarty ();
         $smart->caching = false;
         $smart->debugging = false;
         $smart->template_dir = SMARTY_TEMPLATES_DIR;

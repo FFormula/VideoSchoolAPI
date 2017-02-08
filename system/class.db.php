@@ -1,5 +1,7 @@
 <?php
 
+namespace system;
+
 class db
 {
     private static $instance = null;
@@ -27,7 +29,7 @@ class db
             return;
 
 //      echo "  host: " . DB_HOST . ", user: " . DB_USER . ", base: " . DB_BASE . ", " . DB_PASS;
-        $this -> mi = new MySQLi(DB_HOST, DB_USER, DB_PASS, DB_BASE);
+        $this -> mi = new \MySQLi(DB_HOST, DB_USER, DB_PASS, DB_BASE);
 
         if ($this -> mi -> connect_errno)
             throw new Exception (

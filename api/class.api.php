@@ -4,13 +4,11 @@ namespace api;
 
 class api
 {
-    protected $get;
-    protected $post;
-    protected $info;
-
     protected function error ($text)
     {
-        $this->info["error"] = $text;
+        return array (
+            "error" => $text
+        );
     }
 
     protected function show_help ($text)
