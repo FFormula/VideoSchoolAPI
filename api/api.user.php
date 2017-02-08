@@ -96,6 +96,11 @@ When login is successful, an authorized cookie will be placed.");
 
     public function show ($get)
     {
+        $arr = array ();
+        $head = new divs_head("show user demo");
+        $arr ["head"] = $head->get();
+        return $arr;
+
         if (!($id = $this->my_user_id()))
             return $this->error("No login");
         $user = new users ();

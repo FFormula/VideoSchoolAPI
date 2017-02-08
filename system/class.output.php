@@ -2,7 +2,7 @@
 
 class output
 {
-    private $mode = "array";
+    private $mode = "smarty";
     private $class;
     private $method;
     private $info;
@@ -54,7 +54,7 @@ class output
         $smart->debugging = false;
         $smart->template_dir = SMARTY_TEMPLATES_DIR;
         $smart->assign ("info", $this->info);
-        $smart->display ($this->class . "." . $this->method . ".tpl");
+        $smart->display ("index.tpl"); // $this->class . "." . $this->method . ".tpl");
     }
 
     private function redirect ()
