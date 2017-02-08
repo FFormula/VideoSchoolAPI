@@ -101,6 +101,7 @@ When login is successful, an authorized cookie will be placed.");
         $arr = array ();
         $arr ["head"] = new \divs\head("show user demo");
         $arr ["menu"] = new \divs\menu();
+        $arr ["tail"] = new \divs\tail();
         return $arr;
 
         if (!($id = $this->my_user_id()))

@@ -9,3 +9,4 @@
         <link rel="image_src" href="{$info.head->image}"/>
         <meta name="image" content="{$info.head->image}">
     </head>
+    <body>

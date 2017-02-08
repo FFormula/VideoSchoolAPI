@@ -4,7 +4,7 @@ namespace system;
 
 class output
 {
-    private $mode = "array";
+    private $mode = "smarty";
     private $class;
     private $method;
     private $info;
