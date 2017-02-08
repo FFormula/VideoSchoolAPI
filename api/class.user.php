@@ -1,5 +1,7 @@
 <?php
 
+namespace api;
+
 class user extends api
 {
     public function help ($get)
@@ -97,8 +99,8 @@ When login is successful, an authorized cookie will be placed.");
     public function show ($get)
     {
         $arr = array ();
-        $head = new divs_head("show user demo");
-        $arr ["head"] = $head->get();
+        $arr ["head"] = new \divs\head("show user demo");
+        $arr ["menu"] = new \divs\menu();
         return $arr;
 
         if (!($id = $this->my_user_id()))

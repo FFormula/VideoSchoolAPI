@@ -1,19 +1,16 @@
 <?php
 
+namespace api;
+
 class api
 {
-    protected function message ($text)
-    {
-        return array (
-            "message" => $text
-        );
-    }
+    protected $get;
+    protected $post;
+    protected $info;
 
     protected function error ($text)
     {
-        return array (
-            "error" => $text
-        );
+        $this->info["error"] = $text;
     }
 
     protected function show_help ($text)
