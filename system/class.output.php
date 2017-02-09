@@ -50,7 +50,7 @@ class output
     private function done_smarty ()
     {
         if ($this->redirect()) return;
-        require_once "lib/Smarty.class.php";
+        require_once "lib-smarty/Smarty.class.php";
         $smart = new \Smarty ();
         $smart->caching = false;
         $smart->debugging = false;
