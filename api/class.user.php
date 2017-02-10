@@ -2,83 +2,57 @@
 
 namespace api;
 
+/**
+ * Class user
+ * @package api
+ * User API functions list:
+ */
 class user extends api
 {
-    public function help ($get)
-    {
-        return $this->show_help (
-"User API functions list:
-/user/join - register new user
-/user/login - authorize by email and password
-/user/show - show logged user info
-/user/edit - edit user data
-/user/logout - sign out");
-    }
-
+    /**
+     * @param $get
+     * @return bool
+     * Register new user:
+     *     [name] - unique user screen-name,
+     *     [email] - valid unique user e-mail address
+     *     [password] - user password, stored sha1-hash code
+     */
     public function join ($get)
     {
-        if (count($get) <= 2)
-            return $this->show_help(
-"Register new user:
-[name] - unique user name, min length 3, max length 20, only letters, digits, _ and . 
-[email] - valid unique user e-mail address
-[password] - user password, min length 8, max length 50");
         if (!isset ($get ["name"]))
-            return $this->error("[name] param does not set");
-        if (!\system\text::is_alpha($get["name"]))
-            return $this->error("[name] incorrect, use only letters, digits, _ and .");
-        if (strlen($get["name"]) < 3)
-            return $this->error("[name] is too short");
-        if (strlen($get["name"]) > 20)
-            return $this->error("[name] is too long");
+            return $this->set_error("[name] param does not set");
         if (!isset ($get ["email"]))
-            return $this->error("[email] param does not set");
-        if (!\system\text::is_email($get["email"]))
-            return $this->error("[email] incorrect, provide correct e-mail address");
+            return $this->set_error("[email] param does not set");
         if (!isset ($get ["password"]))
-            return $this->error("[password] field does not set");
-        if (strlen($get["password"]) < 8)
-            return $this->error("[password] is too short");
-        if (strlen($get["password"]) > 50)
-            return $this->error("[password] is too long");
+            return $this->set_error("[password] field does not set");
+
         $login = new \model\login ();
-        $result = $login->join($get["name"], $get["email"], $get["password"]);
-        if ($result != "ok")
-            return $this->error("[model] " . $result);
-        return array ("message" => "ok");
+        if ($login->join($get["name"], $get["email"], $get["password"]))
+            return $this->set_error($login->get_error());
+
+        return true;
     }
 
+    /**
+     * @param $get
+     * @return bool
+     * Login an existing user:
+     *     [email] - user e-mail addresss
+     *     [password] - user password
+     * When login is successful, an authorized cookie will be placed.
+     */
     public function login ($get)
     {
-        if (count($get) <= 2)
-            return $this->show_help(
-"Login an existing user:
-[email] - user e-mail addresss
-[password] - user password
-When login is successful, an authorized cookie will be placed.");
         if (!isset ($get ["email"]))
-            return $this->error("[email] param does not set");
-        if (!\system\text::is_email($get["email"]))
-            return $this->error("[email] incorrect, provide correct e-mail address");
+            return $this->set_error("[email] param does not set");
         if (!isset ($get ["password"]))
-            return $this->error("[password] field does not set");
-        $login = new \model\login ();
-        $result = $login->login($get["email"], $get["password"]);
-        if ($result != "ok")
-            return $this->error("[model] " . $result);
-        return array ("message" => "ok");
+            return $this->set_error("[password] field does not set");
 
-        /*$status = $user->get_row()["status"];
-        if ($status == "wait")
-            return $this->error("[status] waiting for confirmation e-mail");
-        if ($status == "stop")
-            return $this->error("[status] user account has been disabled");
-        if ($status == "open")
-        {
-            $_SESSION ["user"] = $user->get_row();
-            return $user->get_row();
-        }
-        return $this->error("unknown error");*/
+        $login = new \model\login ();
+        if (!$login->login($get["email"], $get["password"]))
+            return $this->set_error ($login->get_error());
+
+        return true;
     }
 
     public function show ($get)
@@ -88,39 +62,27 @@ When login is successful, an authorized cookie will be placed.");
         $arr ["menu"] = new \divs\menu();
         $arr ["tail"] = new \divs\tail();
         return $arr;
-
-        if (!($id = $this->my_user_id()))
-            return $this->error("No login");
-        $user = new \model\users ();
-        $user->select($id);
-        return $user->get_row();
     }
 
+    /**
+     * @param $get
+     * @return bool
+     * Update name in the user table
+     *    [name] new name
+     *    [password] confirm changes by current password
+     */
     public function edit_name ($get)
     {
-        if (count($get) <= 2)
-            return $this->show_help(
-"Update name in the user table
-[value] new name
-[password] confirm changes by current password");
-        if (!($id = $this->my_user_id()))
-            return $this->error("No login");
-        if (!isset($get["value"]))
-            return $this->error("[value] param does not set");
+        if (!isset($get["name"]))
+            return $this->error("[name] param does not set");
         if (!isset($get["password"]))
             return $this->error("[password] param does not set");
-        $value = $get["value"];
-        if (!\system\text::is_alpha($value))
-            return $this->error("[value] must be alphanumerical");
-        if (strlen($value) < 3)
-            return $this->error("[value] is too short");
-        if (strlen($value) > 20)
-            return $this->error("[value] is too long");
-        $password = $get["password"];
-        $user = new \model\users ();
-        if ($user->update_name ($id, $value, $password))
-            return $this->message("ok");
-        return $this->error("name not changed");
+
+        $login = new \model\login ();
+        if (!$login->update_name($get["name"], $get["password"]))
+            return $this->set_error ($login->get_error());
+
+        return true;
     }
 
     public function edit_email ($get)

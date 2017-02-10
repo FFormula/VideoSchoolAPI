@@ -15,6 +15,16 @@ class user extends \table\table
         if ($id) $this->select($id);
     }
 
+    public function pack ()
+    {
+        return array (
+            "id" => $this->id,
+            "name" => $this->name,
+            "email" => $this->email,
+            "status" => $this->status
+        );
+    }
+
     public function insert ()
     {
         db()->query(

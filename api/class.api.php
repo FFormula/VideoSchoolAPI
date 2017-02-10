@@ -4,11 +4,12 @@ namespace api;
 
 class api
 {
-    protected function error ($text)
+    protected $error_message;
+
+    protected function set_error ($message)
     {
-        return array (
-            "error" => $text
-        );
+        $this->error_message = $message;
+        return false;
     }
 
     protected function show_help ($text)
