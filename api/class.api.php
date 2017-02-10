@@ -4,25 +4,17 @@ namespace api;
 
 class api
 {
-    protected $error_message;
+    protected $error_message = "";
 
     protected function set_error ($message)
     {
         $this->error_message = $message;
         return false;
     }
-
-    protected function show_help ($text)
+    
+    public function get_error ()
     {
-        return array (
-            "help" => $text
-        );
+        return $this->error_message;
     }
 
-    protected function my_user_id ()
-    {
-        if (!isset($_SESSION ["user"] ["user_id"]))
-            return false;
-        return $_SESSION ["user"] ["user_id"];
-    }
 }

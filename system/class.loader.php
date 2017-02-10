@@ -91,10 +91,14 @@ class loader
         $api = new $this->class ();
         if (!is_callable(array ($api, $this->method)))
             $this->method = DATA_DEFAULT_METHOD;
-        if (count ($this->post) > 0)
-            $this->info = $api->{$this->method} ($this->get, $this->post);
+//        if (count ($this->post) > 0)
+//            $res = $api->{$this->method} ($this->get, $this->post);
+//        else
+
+        if ($api->{$this->method} ($this->get))
+            $this->info["success"] = "ok";
         else
-            $this->info = $api->{$this->method} ($this->get);
+            $this->info["error"] = $api->get_error();
     }
 
 }

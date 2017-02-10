@@ -27,7 +27,7 @@ class user extends api
             return $this->set_error("[password] field does not set");
 
         $login = new \model\login ();
-        if ($login->join($get["name"], $get["email"], $get["password"]))
+        if (!$login->join($get["name"], $get["email"], $get["password"]))
             return $this->set_error($login->get_error());
 
         return true;
@@ -74,9 +74,9 @@ class user extends api
     public function edit_name ($get)
     {
         if (!isset($get["name"]))
-            return $this->error("[name] param does not set");
+            return $this->set_error("[name] param does not set");
         if (!isset($get["password"]))
-            return $this->error("[password] param does not set");
+            return $this->set_error("[password] param does not set");
 
         $login = new \model\login ();
         if (!$login->update_name($get["name"], $get["password"]))
@@ -85,52 +85,46 @@ class user extends api
         return true;
     }
 
+    /**
+     * @param $get
+     * @return bool
+     * Update email in the user table
+     *     [email] new e-mail
+     *     [password] confirm changes by current password
+     */
     public function edit_email ($get)
     {
-        if (count($get) <= 2)
-            return $this->show_help(
-"Update email in the user table
-[value] new e-mail
-[password] confirm changes by current password");
-        if (!($id = $this->my_user_id()))
-            return $this->error("No login");
-        if (!isset($get["value"]))
-            return $this->error("[value] param does not set");
+        if (!isset($get["email"]))
+            return $this->set_error("[email] param does not set");
         if (!isset($get["password"]))
-            return $this->error("[password] param does not set");
-        $value = $get["value"];
-        if (!\system\text::is_email($value))
-            return $this->error("[value] must be a correct e-mail address");
-        $password = $get["password"];
-        $user = new \model\users ();
-        if ($user->update_email ($id, $value, $password))
-            return $this->message("ok");
-        return $this->error("email not changed");
+            return $this->set_error("[password] param does not set");
+
+        $login = new \model\login ();
+        if (!$login->update_email($get["email"], $get["password"]))
+            return $this->set_error ($login->get_error());
+
+        return true;
     }
 
+    /**
+     * @param $get
+     * @return bool
+     * Change user password
+     *     [new_password] new password
+     *     [password] confirm changes by current password
+     */
     public function edit_password ($get)
     {
-        if (count($get) <= 2)
-            return $this->show_help(
-"Change user password
-[value] new password
-[password] confirm changes by current password");
-        if (!($id = $this->my_user_id()))
-            return $this->error("No login");
-        if (!isset($get["value"]))
-            return $this->error("[value] param does not set");
+        if (!isset($get["new_password"]))
+            return $this->set_error("[new_password] param does not set");
         if (!isset($get["password"]))
-            return $this->error("[password] param does not set");
-        $value = $get["value"];
-        if (strlen($value) < 8)
-            return $this->error("[value] is too short");
-        if (strlen($value) > 50)
-            return $this->error("[value] is too long");
-        $password = $get["password"];
-        $user = new \model\users ();
-        if ($user->update_password ($id, $value, $password))
-            return $this->message("ok");
-        return $this->error("password not changed");
+            return $this->set_error("[password] param does not set");
+
+        $login = new \model\login ();
+        if (!$login->update_password($get["new_password"], $get["password"]))
+            return $this->set_error ($login->get_error());
+
+        return true;
     }
 
     public function logout ($get)

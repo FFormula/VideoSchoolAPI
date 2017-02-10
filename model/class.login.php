@@ -13,11 +13,10 @@ class login
 
     public function join ($name, $email, $password)
     {
-        $user = new \table\user();
-
         if (!$this->check_name($name)) return false;
         if (!$this->check_email($email)) return false;
         if (!$this->check_password($password)) return false;
+        $user = new \table\user();
 
         if ($user->select_by_name($name))
             return $this->set_error ("user name taken");
@@ -34,18 +33,19 @@ class login
 
     public function login ($email, $password)
     {
-        $user = new \table\user();
         if (!$this->check_email($email)) return false;
+
+        $user = new \table\user();
         if (!$user->select_by_email($email))
             return $this->set_error("email not found");
+        if ($user->passhash != $this->hash_password($user->name, $password))
+            return $this->set_error("invalid password");
         if ($user->status == "stop")
             return $this->set_error("user account has been blocked");
         if ($user->status == "wait")
             return $this->set_error("please confirm your e-mail");
         if ($user->status != "open")
             return $this->set_error("user status unknown");
-        if ($user->passhash != $this->hash_password($user->name, $password))
-            return $this->set_error("invalid password");
 
         $_SESSION ["user"] = $user->pack();
         return true;
@@ -53,38 +53,53 @@ class login
 
     public function update_name ($name, $password)
     {
-        if (!is_logged()) return false;
+        if (!\system\session::is_logged())
+            return $this->set_error("no login");
 
-        $user = new \table\user($_SESSION["user"]["id"]);
+        $user = new \table\user(\system\session::get_user()["id"]);
         if (!$user->id)
             return $this->set_error("user not found");
         if ($user->passhash != $this->hash_password($user->name, $password))
             return $this->set_error("invalid password");
+        if ($user->name == $name)
+            return $this->set_error("name is the same");
+        $user->name = $name;
         $user->passhash = $this->hash_password($name, $password);
         $user->update();
         return true;
     }
 
-    public function update_email ($id, $email, $password)
+    public function update_email ($email, $password)
     {
-        $user = new \table\user($id);
+        if (!$this->check_email($email)) return false;
+
+        if (!\system\session::is_logged())
+            return $this->set_error("no login");
+
+        $user = new \table\user(\system\session::get_user()["id"]);
         if (!$user->id)
             return $this->set_error("user not found");
         if ($user->passhash != $this->hash_password($user->name, $password))
             return $this->set_error("invalid password");
+        if ($user->email == $email)
+            return $this->set_error("email is the same");
         $user->email = $email;
         $user->update();
         return true;
     }
 
-    public function update_password ($id, $new_password, $old_password)
+    public function update_password ($new_password, $old_password)
     {
-        $user = new \table\user($id);
+        if (!$this->check_password($new_password)) return false;
+        
+        $user = new \table\user(\system\session::get_user()["id"]);
         if (!$user->id)
             return $this->set_error("user not found");
         if ($user->passhash != $this->hash_password($user->name, $old_password))
             return $this->set_error("invalid password");
-        $user->passhash = $this->hash_password($this->name, $new_password);
+        if ($new_password == $old_password)
+            return $this->set_error("password is the same");
+        $user->passhash = $this->hash_password($user->name, $new_password);
         $user->update();
         return true;
     }
@@ -119,7 +134,6 @@ class login
     protected function is_logged ()
     {
         if (!isset ($_SESSION ["user"] ["id"]))
-            return $this->set_error("Please relogin");
         return true;
     }
 
