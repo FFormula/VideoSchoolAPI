@@ -2,6 +2,8 @@
 
 namespace api;
 
+use model;
+
 /**
  * Class user
  * @package api
@@ -26,7 +28,7 @@ class user extends api
         if (!isset ($get ["password"]))
             return $this->set_error("[password] field does not set");
 
-        $login = new \model\login ();
+        $login = new model\login ();
         if (!$login->join($get["name"], $get["email"], $get["password"]))
             return $this->set_error($login->get_error());
 
@@ -48,7 +50,7 @@ class user extends api
         if (!isset ($get ["password"]))
             return $this->set_error("[password] field does not set");
 
-        $login = new \model\login ();
+        $login = new model\login ();
         if (!$login->login($get["email"], $get["password"]))
             return $this->set_error ($login->get_error());
 
@@ -78,7 +80,7 @@ class user extends api
         if (!isset($get["password"]))
             return $this->set_error("[password] param does not set");
 
-        $login = new \model\login ();
+        $login = new model\login ();
         if (!$login->update_name($get["name"], $get["password"]))
             return $this->set_error ($login->get_error());
 
@@ -99,7 +101,7 @@ class user extends api
         if (!isset($get["password"]))
             return $this->set_error("[password] param does not set");
 
-        $login = new \model\login ();
+        $login = new model\login ();
         if (!$login->update_email($get["email"], $get["password"]))
             return $this->set_error ($login->get_error());
 
@@ -120,7 +122,7 @@ class user extends api
         if (!isset($get["password"]))
             return $this->set_error("[password] param does not set");
 
-        $login = new \model\login ();
+        $login = new model\login ();
         if (!$login->update_password($get["new_password"], $get["password"]))
             return $this->set_error ($login->get_error());
 

@@ -23,4 +23,9 @@ class session
         return false;
     }
 
+    public static function logout ()
+    {
+        unset ($_SESSION ["user"]);
+    }
+
 }

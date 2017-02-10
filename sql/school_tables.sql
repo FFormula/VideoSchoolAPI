@@ -1,3 +1,4 @@
+# noinspection SqlNoDataSourceInspectionForFile
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255), -- user screen name - [a-z0-9_.]

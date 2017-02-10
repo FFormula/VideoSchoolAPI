@@ -90,15 +90,15 @@ class loader
     {
         $api = new $this->class ();
         if (!is_callable(array ($api, $this->method)))
-            $this->method = DATA_DEFAULT_METHOD;
+            throw new \Exception("api class not found");
 //        if (count ($this->post) > 0)
 //            $res = $api->{$this->method} ($this->get, $this->post);
 //        else
 
         if ($api->{$this->method} ($this->get))
-            $this->info["success"] = "ok";
+            $this->info = "ok";
         else
-            $this->info["error"] = $api->get_error();
+            $this->info = $api->get_error();
     }
 
 }

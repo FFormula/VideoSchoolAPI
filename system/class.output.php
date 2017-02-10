@@ -18,8 +18,6 @@ class output
 
     public function done ()
     {
-        $this->info["class"] = $this->class;
-        $this->info["method"] = $this->method;
         switch ($this->mode)
         {
             case "json" : return $this->done_json();

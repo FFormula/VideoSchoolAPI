@@ -29,8 +29,8 @@ class user extends \table\table
     {
         db()->query(
             "INSERT INTO users
-                SET name = '" . $this->name .
-                "', email = '" . $this->email .
+                SET name = '" . strtolower($this->name) .
+                "', email = '" . strtolower($this->email) .
                 "', status = '" . $this->status .
                 "', passhash = '" . $this->passhash . "'");
         $this->id = db()->insert_id();
@@ -47,8 +47,8 @@ class user extends \table\table
         if (!$this->id) return;
         db()->query(
             "UPDATE users
-                SET name = '" . $this->name .
-                "', email = '" . $this->email .
+                SET name = '" . strtolower($this->name) .
+                "', email = '" . strtolower($this->email) .
                 "', status = '" . $this->status .
                 "', passhash = '" . $this->passhash .
            "' WHERE id = '" . $this->id . "'");
@@ -56,13 +56,11 @@ class user extends \table\table
 
     public function select_by_name ($name)
     {
-        return $this->select_from ("users", "name", $name);
+        return $this->select_from ("users", "name", strtolower($name));
     }
 
     public function select_by_email ($email)
     {
-        return $this->select_from ("users", "email", $email);
+        return $this->select_from ("users", "email", strtolower($email));
     }
-
-
 }
