@@ -5,6 +5,9 @@
     define ("DATA_DEFAULT_METHOD", "index");
     define ("SMARTY_TEMPLATES_DIR", "view");
 
+    define ("API_DEFAULT_CLASS", "user");
+    define ("API_DEFAULT_METHOD", "help");
+
     define ("DB_ENGINE", "mysql");
     define ("DB_HOST", "localhost");
     define ("DB_USER", "user");

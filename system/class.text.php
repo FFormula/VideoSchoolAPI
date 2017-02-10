@@ -6,7 +6,7 @@ class text
 {
     public static function is_alpha ($text)
     {
-        return preg_match("/[a-z]+[a-z0-9_.]*/", $text);
+        return preg_match("/^[a-z]+[a-z0-9_.]*$/", $text);
     }
 
     public static function is_email ($email)
