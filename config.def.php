@@ -2,6 +2,7 @@
     define ("ROOT", "");
     define ("DATA_GET", "data"); // main "get" parameter, see .htaccess
     define ("DIVS_DEFAULT_CLASS", "news");
+    define ("DIVS_DEFAULT_METHOD", "index");
     define ("API_DEFAULT_CLASS", "user");
     define ("API_DEFAULT_METHOD", "help");
     define ("SMARTY_TEMPLATES_DIR", "view");

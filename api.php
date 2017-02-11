@@ -2,12 +2,12 @@
     include "config.php";
     include "header.php";
 
-    $run = new system\run();
+    $api = new run\api();
 
-    if ($run->run_api())
+    if ($api->run())
         $answer = "ok";
     else
-        $answer = $run->get_error();
+        $answer = $api->get_error();
 
     echo $answer;
 

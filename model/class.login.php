@@ -13,13 +13,6 @@ use \system;
  */
 class login
 {
-    private $error = "";
-
-    public function get_error ()
-    {
-        return $this->error;
-    }
-
     /**
      * @param $name user name
      * @param $email user e-mail
@@ -191,10 +184,9 @@ class login
         return sha1 ($name . "/" . $password);
     }
 
-    protected function set_error ($message)
-    {
-        $this->error = $message;
-        return false;
-    }
+
+    protected $error = "";
+    public function get_error () { return $this->error; }
+    protected function set_error ($message) { $this->error = $message; return false; }
 
 }

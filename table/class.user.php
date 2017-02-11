@@ -2,7 +2,7 @@
 
 namespace table;
 
-class user extends \table\table
+class user extends table
 {
     public $id;
     public $name;

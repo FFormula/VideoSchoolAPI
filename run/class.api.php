@@ -1,16 +1,17 @@
 <?php
 
-namespace system;
+namespace run;
+
+use \system;
 
 /**
  * Class run - run an API function
  * @package system
  */
-class run
+class api
 {
     private $class; // class to be used in API
     private $method; // method to be called
-    private $error = "";
 
     public function __construct()
     {
@@ -18,16 +19,16 @@ class run
         $this->init_method();
     }
 
-    public function run_api ()
+    public function run ()
     {
         $this->error = "";
-        if (!text::is_alpha($this->class))
+        if (!system\text::is_alpha($this->class))
             return $this->set_error ("incorrect symbols in class param");
         $class = "\\api\\" . $this->class;
 
         $api = new $class ();
 
-        if (!text::is_alpha($this->method))
+        if (!system\text::is_alpha($this->method))
             return $this->set_error ("incorrect symbols in method param");
         $method = $this->method;
 
@@ -38,11 +39,6 @@ class run
             return $this->set_error ($api->get_error());
 
         return true;
-    }
-
-    public function get_error ()
-    {
-        return $this->error;
     }
 
     private function init_class ()
@@ -61,10 +57,8 @@ class run
             $this->method = $_GET ["method"];
     }
 
-    private function set_error ($message)
-    {
-        $this->error = $message;
-        return false;
-    }
+    protected $error = "";
+    public function get_error () { return $this->error; }
+    protected function set_error ($message) { $this->error = $message; return false; }
 
 }
