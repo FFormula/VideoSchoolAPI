@@ -2,16 +2,38 @@
 
 namespace system;
 
+/**
+ * Class run - run an API function
+ * @package system
+ */
 class run
 {
     private $class; // class to be used in API
     private $method; // method to be called
+    private $error = "";
 
     public function __construct()
     {
         $this->init_class();
         $this->init_method();
-        $this->start();
+    }
+
+    public function run_api ()
+    {
+        $this->error = "";
+        $api = new $this->class ();
+        if (!is_callable(array ($api, $this->method)))
+            return $this->set_error ("api class/method not found: " . $this->class . "/" . $this->method);
+
+        if (!$api->{$this->method} ($_GET))
+            return $this->set_error ($api->get_error());
+
+        return true;
+    }
+
+    public function get_error ()
+    {
+        return $this->error;
     }
 
     private function init_class ()
@@ -36,16 +58,10 @@ class run
         $this->method = $method;
     }
 
-    private function start ()
+    private function set_error ($message)
     {
-        $api = new $this->class ();
-        if (!is_callable(array ($api, $this->method)))
-            throw new \Exception("api class/method not found: " . $this->class . "/" . $this->method);
-
-        if ($api->{$this->method} ($_GET))
-            echo "ok";
-        else
-            echo $api->get_error();
+        $this->error = $message;
+        return false;
     }
 
 }

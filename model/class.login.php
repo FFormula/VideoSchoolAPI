@@ -13,11 +13,11 @@ use \system;
  */
 class login
 {
-    private $error_message = "";
+    private $error = "";
 
     public function get_error ()
     {
-        return $this->error_message;
+        return $this->error;
     }
 
     /**
@@ -67,9 +67,9 @@ class login
         if ($user->status == "wait")
             return $this->set_error("please confirm your e-mail");
         if ($user->status != "open")
-            return $this->set_error("user status unknown");
+            return $this->set_error("unknown user status");
 
-        $_SESSION ["user"] = $user->pack();
+        system\session::set_user($user->pack());
         return true;
     }
 
@@ -83,6 +83,8 @@ class login
     {
         if (!system\session::is_logged())
             return $this->set_error("no login");
+
+        if (!$this->check_name($name)) return false;
 
         $user = new table\user(system\session::get_user()["id"]);
         if (!$user->id)
@@ -105,10 +107,10 @@ class login
      */
     public function update_email ($email, $password)
     {
-        if (!$this->check_email($email)) return false;
-
         if (!system\session::is_logged())
             return $this->set_error("no login");
+
+        if (!$this->check_email($email)) return false;
 
         $user = new table\user(system\session::get_user()["id"]);
         if (!$user->id)
@@ -130,6 +132,9 @@ class login
      */
     public function update_password ($new_password, $old_password)
     {
+        if (!system\session::is_logged())
+            return $this->set_error("no login");
+
         if (!$this->check_password($new_password)) return false;
         
         $user = new table\user(system\session::get_user()["id"]);
@@ -188,7 +193,7 @@ class login
 
     protected function set_error ($message)
     {
-        $this->error_message = $message;
+        $this->error = $message;
         return false;
     }
 

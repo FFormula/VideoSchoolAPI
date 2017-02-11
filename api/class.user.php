@@ -57,15 +57,6 @@ class user extends api
         return true;
     }
 
-    public function show ($get)
-    {
-        $arr = array ();
-        $arr ["head"] = new \divs\head("show user demo");
-        $arr ["menu"] = new \divs\menu();
-        $arr ["tail"] = new \divs\tail();
-        return $arr;
-    }
-
     /**
      * @param $get
      * @return bool
@@ -129,11 +120,17 @@ class user extends api
         return true;
     }
 
+    /**
+     * @param $get
+     * @return bool true
+     * Logout and close user session
+     */
     public function logout ($get)
     {
-        unset ($_SESSION ["user"]);
-        //return $this->message("Logged out");
-        return array ("redirect" => "/");
+        $login = new model\login();
+        $login->logout();
+
+        return true;
     }
 
 }

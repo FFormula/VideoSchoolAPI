@@ -4,6 +4,8 @@ namespace system;
 
 class db
 {
+    private $mi;
+
     private static $instance = null;
     public static function getDB()
     {
@@ -11,14 +13,11 @@ class db
             static::$instance = new db ();
         return static::$instance;
     }
-
     private function __construct ()
     {
         $this -> connect ();
     }
     
-    private $mi;
-
     /**
      * One-time connection to the database
      * @throws Exception on error during connect to MySQL
@@ -39,7 +38,6 @@ class db
 
     /**
      * Query the database
-     *
      * @param $query The query string
      * @return mixed The result of the mysqli::query() function
      * @throws Exception on MySQL error with query and error message
@@ -58,7 +56,6 @@ class db
 
     /**
      * Fetch rows from the database (SELECT query)
-     *
      * @param $query The query string
      * @return array database rows on success
      */
