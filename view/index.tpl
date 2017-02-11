@@ -1,3 +1,3 @@
 {foreach from=$info key=key item=item}
-    {include file="divs/$key.tpl"}
+    {include file="div/$key.tpl"}
 {/foreach}

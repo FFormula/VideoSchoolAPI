@@ -21,11 +21,20 @@ class run
     public function run_api ()
     {
         $this->error = "";
-        $api = new $this->class ();
-        if (!is_callable(array ($api, $this->method)))
-            return $this->set_error ("api class/method not found: " . $this->class . "/" . $this->method);
+        if (!text::is_alpha($this->class))
+            return $this->set_error ("incorrect symbols in class param");
+        $class = "\\api\\" . $this->class;
 
-        if (!$api->{$this->method} ($_GET))
+        $api = new $class ();
+
+        if (!text::is_alpha($this->method))
+            return $this->set_error ("incorrect symbols in method param");
+        $method = $this->method;
+
+        if (!is_callable(array ($api, $method)))
+            return $this->set_error ("api class/method not found: " . $class . "/" . $method);
+
+        if (!$api->$method ($_GET))
             return $this->set_error ($api->get_error());
 
         return true;
@@ -39,23 +48,17 @@ class run
     private function init_class ()
     {
         if (!isset ($_GET ["class"]))
-            $class = API_DEFAULT_CLASS;
+            $this->class = API_DEFAULT_CLASS;
         else
-            $class = $_GET ["class"];
-        if (!text::is_alpha($class))
-            die ("incorrect symbols in class param");
-        $this->class = "\\api\\" . $class;
+            $this->class = $_GET ["class"];
     }
 
     private function init_method ()
     {
         if (!isset ($_GET ["method"]))
-            $method = API_DEFAULT_METHOD;
+            $this->method = API_DEFAULT_METHOD;
         else
-            $method = $_GET ["method"];
-        if (!text::is_alpha($method))
-            die ("incorrect symbols in method param");
-        $this->method = $method;
+            $this->method = $_GET ["method"];
     }
 
     private function set_error ($message)

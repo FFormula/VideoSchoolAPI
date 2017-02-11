@@ -1,12 +1,11 @@
 <?php
     define ("ROOT", "");
     define ("DATA_GET", "data"); // main "get" parameter, see .htaccess
-    define ("DATA_DEFAULT_CLASS", "shop");
-    define ("DATA_DEFAULT_METHOD", "index");
-    define ("SMARTY_TEMPLATES_DIR", "view");
-
+    define ("DIVS_DEFAULT_CLASS", "news");
     define ("API_DEFAULT_CLASS", "user");
     define ("API_DEFAULT_METHOD", "help");
+    define ("SMARTY_TEMPLATES_DIR", "view");
+
 
     define ("DB_ENGINE", "mysql");
     define ("DB_HOST", "localhost");
