@@ -16,6 +16,9 @@
 				jQuery(".promo-hidden").hide();
 				jQuery(".promo").show();
 			});
+			jQuery(".alert-success .close").click(function() {
+				jQuery(".alert-success").fadeOut();
+			});
 		});
 	</script>
 </body>
