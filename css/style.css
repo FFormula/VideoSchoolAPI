@@ -1,0 +1,171 @@
+a, a:visited, a:hover, a:focus {
+	text-decoration:none;
+	color:#333;
+}
+
+.custom-navbar {
+	height:70px;
+	border-radius:0px;
+}
+
+.custom-navbar .container, .custom-navbar .navbar-header, .custom-navbar .collapse.navbar-collapse, .custom-navbar ul, .custom-navbar ul li, .custom-navbar ul li a {
+	height:100% !important;
+}
+
+.custom-navbar ul li a {
+	padding-top:22px;
+}
+
+.header-logo, .header-logo:visited {
+	width:60px;
+	height:60px;
+	display:block;
+	border-radius:30px;
+	background:#fff;
+	text-align:center;
+	padding-top:5px;
+	margin-top:4px;
+}
+
+.header-logo img {
+	height:50px;
+}
+
+.promo {
+	background:#2d2d4c;
+	border-radius:0px;
+	border:0px;
+}
+
+.promo h4 {
+	color:#fff;
+	margin:15px 0px;
+}
+
+.promo-close {
+	position:absolute;
+	top:15px;
+	right:20px;
+	color:#fff;
+	text-shadow:none;
+}
+
+.promo-close:focus {
+	outline:none;
+}
+
+.promo-hidden {
+	min-height:0px;
+	height:10px;
+	cursor:pointer;
+	border-radius:0px;
+	background:#2d2d4c;
+	display:none;
+	border:0px;
+	transition: 0.5s linear;
+}
+
+.promo-hidden:hover {
+	-webkit-transform: scale(1.05);
+	-moz-transform: scale(1.05);
+	-o-transform: scale(1.05);
+}
+
+.search-query:focus {
+	outline:none !important;
+}
+
+.navbar {
+	margin-bottom:0px;
+}
+
+.jumbotron {
+	/*background:url(../img/top_decoration.png) 0px 0px repeat-x;*/
+	/*background:#2d2d4c;*/
+	background:#59595a;
+	padding:7px 0px;
+	position:relative;
+}
+
+.item h3 {
+	margin-top:0px;
+}
+
+.item p {
+	font-size:12px;
+	margin:5px 0px;
+}
+
+.filter label {
+	color:#fff;
+	padding:5px 0px;
+	font-weight:600;
+}
+
+.filter .checkbox input {
+	top:1px;
+}
+
+.footer {
+	border-radius:0px;
+}
+
+.tail {
+	color:#fff;
+	padding-top:20px;
+}
+
+.tail ul li a, .tail ul li a:visited {
+	color:#fff;
+}
+
+.tail ul li a:hover {
+	color:#333;
+}
+
+.copy {
+	color:#fff;
+	padding-top:20px;
+}
+
+.copy a, .copy a:visited {
+	color:#fff;
+	padding-top:20px;
+}
+
+.footer-logo, .footer-logo:visited {
+	width:160px;
+	height:160px;
+	display:block;
+	margin:0px auto;
+	padding-top:10px;
+	border-radius:80px;
+	background:#fff;
+	text-align:center;
+}
+
+
+@media (max-width: 992px) {
+
+	.filter {
+		margin-top:20px;
+	}
+	
+	.jumbotron {
+		padding:30px 0px;
+	}
+	
+	
+}
+
+@media (max-width: 767px) {
+
+	.filter {
+		margin-top:20px;
+	}
+	
+	.jumbotron {
+		padding:24px 0px;
+	}
+	
+}
