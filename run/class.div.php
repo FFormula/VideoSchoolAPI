@@ -6,9 +6,10 @@ use \system;
 
 class div
 {
-    private $address;
+    private $bars;
     private $class;
     private $method;
+    private $args;
 
     /**
      * @var array - list of all address templates and relation to the functions
@@ -17,112 +18,132 @@ class div
      * 1 - any number [0-9]+
      * / split parameters
      */
-    private $router = array (
-        "news" => array (
-            array ("", "index"),        //news
-            array ("x", "list_news_of_type"),   //news/reports
-            array ("x/x", "info_of_type()")    //news/reports/4004.Elena-DesignPatterns-Singleton
-        ),
+    private $router = array
+    (
+        array ("news", "news/show_all_news"),
+        array ("news/find/@text", "news/show_all_news_by_find_text"),
+        array ("news/@subject", "news/show_all_news_by_subject"),
+        array ("news/@subject/page/@page", "news/show_all_news_by_subject_on_page"),
+        array ("news/@subject/@news", "news/show_one_news_by_subject_news"),
+        array ("news/*", "news/show_error"),
 
-        "shop" => array (
-            array ("", "index"),     //shop
-            array ("x", "about_packet"),        //shop/game1
-            array ("x/bill", "bill_packet"),    //shop/game1/bill
-            array ("x/start", "start_packet"),  //shop/game1/start
-            array ("x/video", "list_all_video_reports_for_packet"), //shop/game1/video
-            array ("x/reports", "list_all_reports_for_packet"), //shop/game1/reports
-            array ("x/reports/x", "list_all_reports_of_lesson_for_packet"), //shop/game1/reports/Igra-15
-            array ("x/lessons", "list_all_lessons_for_packet"), //shop/game1/lessons
-            array ("x/posts", "list_all_posts_for_packet") //shop/game1/posts
-        ),
+        array ("shop", "shop/show_all_packets"),
+        array ("shop/find/@text", "shop/show_all_packets_by_find_text"),
+        array ("shop/rules", "shop/show_rules_of_shopping"),
+        array ("shop/@packet", "shop/show_one_packet_by_id"),
+        array ("shop/@packet/bill", "shop/show_one_packet_bill_form"),
+        array ("shop/@packet/pay/@bill", "shop/show_one_packet_pay_form_by_bill"),
+        array ("shop/@packet/start", "shop/show_one_packet_subscribe_form"),
+        array ("shop/@packet/video", "shop/show_all_video_reports_for_packet"),
+        array ("shop/@packet/reports", "shop/show_all_reports_for_packet"),
+        array ("shop/@packet/reports/@lesson", "shop/show_all_reports_for_packet_lesson"),
+        array ("shop/@packet/lessons", "shop/show_all_lessons_for_packet"),
+        array ("shop/@packet/posts", "shop/show_all_posts_for_packet"),
+        array ("shop/@packet/posts/@lesson", "shop/show_all_posts_for_packet_lesson"),
+        array ("shop/@packet/@lesson", "shop/show_one_lesson_by_id_for_packet"),
+        array ("shop/*", "shop/show_error"),
 
-        "user" => array (
-            array ("", "index"),           //user
-            array ("best", "list_of_best_students"), //user/best
-            array ("best/week",       "list_of_best_student_for_this_week"), //user/best/week
-            array ("best/week/y-m-d", "list_of_best_student_for_spec_week"), //user/best/week/2017-01-02
-            array ("club", "list_of_club_students"), //user/club
-            array ("x", "show_user_info"), //user/vev
-        ),
+        array ("user", "user/show_all_users"),
+        array ("user/online", "user/show_all_users_online"),
+        array ("user/best", "user/show_all_users_are_best"),
+        array ("user/best/week", "user/show_all_users_are_best_of_week"),
+        array ("user/club", "user/show_all_users_in_club"),
+        array ("user/@name", "user/show_one_user_by_name"),
+        array ("user/@name/posts", "user/show_all_posts_of_user"),
+        array ("user/@name/posts/on/@packet", "user/show_all_posts_of_user_by_packet"),
+        array ("user/@name/posts/with/@friend", "user/show_all_posts_between_user_and_friend"),
+        array ("user/@name/reports", "user/show_all_reports_of_user"),
+        array ("user/@name/reports/on/@packet", "user/show_all_reports_of_user_by_packet"),
+        array ("user/@name/video", "user/show_all_videos_of_user"),
+        array ("user/*", "user/show_error"),
 
-        "help" => array (
-            array ("", "index"),
-            array ("ask", "ask_question"),
-            array ("ask/x", "show_question"),
-            array ("faq", "show_faq"),
-            array ("rules", "show_rules"),
-            array ("x", "list_of_items"),
-            array ("x/x", "show_item"),
-        ),
+        array ("help", "help/show_help_about"),
+        array ("help/ask", "help/show_ask_form"),
+        array ("help/ask/@id", "help/show_all_answers_for_ask"),
+        array ("help/faq", "help/show_all_faq"),
+        array ("help/rules", "help/show_rules"),
+        array ("help/contacts", "help/show_all_contacts"),
+        array ("help/@topic", "help/show_all_articles_by_topic"),
+        array ("help/@topic/@id", "help/show_one_article_by_topic_id"),
+        array ("help/*", "help/show_error"),
 
-        "me" => array (
-            array ("", "index"),
-            array ("join", "join_user"),
-            array ("login", "login_user"),
-            array ("login/repassword", "change_password"),
-            array ("edit", "show_edits"),
-            array ("edit/x", "edit_page"),
-            array ("post", "show_all_posts"),
-            array ("stat", "show_main_stats"),
-            array ("stat/x", "show_stat_page")
-        )
+        array ("me", "cabinet/show_user_info"),
+        array ("me/join", "cabinet/show_join_form"),
+        array ("me/login", "cabinet/show_login_form"),
+        array ("me/login/password", "cabinet/show_change_password_form"),
+        array ("me/edit", "cabinet/show_all_edits"),
+        array ("me/edit/@section", "cabinet/show_all_options_by_section"),
+        array ("me/stats", "cabinet/show_main_stats"),
+        array ("me/posts", "cabinet/show_all_my_posts"),
+        array ("me/packets", "cabinet/show_all_my_packets"),
+        array ("me/payments", "cabinet/show_all_my_payments"),
+        array ("me/payouts", "cabinet/show_all_my_payouts"),
+        array ("me/refers", "cabinet/show_all_my_refers"),
+        array ("me/*", "cabinet/show_error"),
+
+        array ("*", "/news/show_error")
     );
 
     public function __construct()
     {
         $this->init_parts();
-        $this->init_class();
-        $this->method = $this->find_method();
+        $this->init_route();
     }
 
     private function init_parts ()
     {
         if (isset ($_GET [DATA_GET]))
-            $this -> address = explode ('/', trim($_GET [DATA_GET], '\\/'));
+            $this -> bars = explode ('/', trim($_GET [DATA_GET], '\\/'));
         else
-            $this -> address = array ();
+            $this -> bars = array ();
     }
 
-    private function init_class ()
+    private function init_route ()
     {
-        if (!isset ($this->address[0]))
-            $this->class = DIVS_DEFAULT_CLASS;
-        else {
-            $this->class = $this->address [0];
-            array_shift($this->address);
-        }
+        $rule = $this->find_route();
+
+        $path = explode("/", $rule [0]);
+        $this->init_args($path);
+
+        list ($this->class, $this->method) = explode("/", $rule [1]);
     }
 
-    private function find_method ()
+    private function find_route ()
     {
-        print_r ($this->address); echo "<br>";
-        if (!isset($this->router[$this->class]))
-            return DIVS_DEFAULT_METHOD;
-        foreach ($this->router[$this->class] as $route_rule)
-            if ($this->admit($route_rule[0]))
-                return $this->method = $route_rule[1];
-        return DIVS_DEFAULT_METHOD;
+        print_r ($this->bars);
+        foreach ($this->router as $rule)
+            if ($this->admit($rule[0]))
+                return $rule;
+        return array ();
+    }
+
+    private function init_args ($path)
+    {
+        $this->args = array ();
+        for ($j = 0; $j < count($path); $j ++)
+            if (substr($path [$j], 0, 1) == "@")
+                $this->args [substr ($path[$j], 1)] = $this->bars [$j];
     }
 
     protected function admit ($route)
     {
-        if ($route == "" && count ($this->address) == 0) return true;
-
         $route_items = explode ("/", trim($route, "/"));
-        if (count($this->address) != count ($route_items))
+
+        if (count($this->bars) != count ($route_items))
             return false;
 
+//        echo "\ncmp " . $route;
         for ($j = 0; $j < count ($route_items); $j ++)
-            if (!$this->like($route_items[$j], $this->address[$j]))
+            if (!$this->like($route_items[$j], $this->bars[$j]))
                 return false;
 
         return true;
     }
 
-    protected function like ($item, $part)
+    protected function like ($item, $bar)
     {
-        if ($part == $item) return true;
-        if ($part == "x" && system\text::is_alpha($item)) return true;
+        if ($item == $bar) return true;
+        if (substr($item, 0, 1) == "@") return true;
         return false;
     }
 
@@ -134,10 +155,11 @@ class div
         $class = "\\div\\" . $this->class;
 
         echo "<br> class/method: " . $class . " -> " . $this->method . " ()";
+        echo "<br> Args: "; print_r ($this->args);
         return;
 
         try {
-            $div = new $class ($this->address);
+            $div = new $class ($this->bars);
         } catch (\Exception $e) {
             return $this->set_error ("class " . $class . " not found");
         }

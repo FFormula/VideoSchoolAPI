@@ -2,7 +2,7 @@
     include "config.php";
     include "header.php";
 
-    $div = new run\div();
+    $div = new \run\div();
 
     if ($div->run())
         $answer = "ok";
