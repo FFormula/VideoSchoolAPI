@@ -1,9 +1,8 @@
 {include file='head.tpl'}
-{include file='atop.tpl'}
 {include file='menu.tpl'}
 {include file='find.tpl'}
 {include file='path.tpl'}
-{include file='hint.tpl'}
+{include file='message.tpl'}
 {include file='list.tpl'}
 {include file='tail.tpl'}
 {include file='stop.tpl'}

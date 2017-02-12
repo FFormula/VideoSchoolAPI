@@ -1,11 +1,7 @@
-<div class="main">
-	<div class="container">
-		<div class="row hint">
-			<div class="alert alert-success" role="alert">
-				Добро пожаловать на Видео Школу!
-				<button type="button" class="close" aria-label="Close"
-					><span aria-hidden="true">&times;</span></button>
-			</div>
-		</div>
-	</div>
-</div>
+	<nav class="navbar navbar-inverse promo-hidden">
+	</nav>
+	<nav class="navbar navbar-inverse promo text-center">
+		<h4>Опубликовано новое видео по созданию ВидеоШколы</h4>
+		<button type="button" class="close promo-close" aria-label="Close"
+			><span aria-hidden="true">&times;</span></button>
+	</nav>
