@@ -11,19 +11,32 @@ class show
     private $method;
 
     private $router = array (
-        "shop" => array (
-            array ("/shop", "list_all_packets"),
-            array ("/shop/x", "about_packet"),
-            array ("/shop/x/bill", "bill_packet"),
-            array ("/shop/x/start", "start_packet"),
-            array ("/shop/x/video", "list_all_video_reports_for_packet"),
-            array ("/shop/x/reports", "list_all_reports_for_packet"),
-            array ("/shop/x/reports/1", "list_all_reports_of_lesson_for_packet"),
-            array ("/shop/x/list", "list_all_lessons_for_packet"),
-            array ("/shop/x/posts", "list_all_posts_for_packet")
+        "news" => array (
+
         ),
+
+        "shop" => array (
+            array ("", "list_all_packets"),
+            array ("x", "about_packet"),
+            array ("x/bill", "bill_packet"),
+            array ("x/start", "start_packet"),
+            array ("x/video", "list_all_video_reports_for_packet"),
+            array ("x/reports", "list_all_reports_for_packet"),
+            array ("x/reports/1", "list_all_reports_of_lesson_for_packet"),
+            array ("x/list", "list_all_lessons_for_packet"),
+            array ("x/posts", "list_all_posts_for_packet")
+        ),
+
         "people" => array (
             array ("/people", "list_all_people")
+        ),
+
+        "help" => array (
+
+        ),
+
+        "user" => array (
+
         )
     );
 
