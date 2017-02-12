@@ -6,7 +6,7 @@ use \system;
 
 class div
 {
-    private $parts;
+    private $address;
     private $class;
     private $method;
 
@@ -19,13 +19,13 @@ class div
      */
     private $router = array (
         "news" => array (
-            array ("", "list_all_news"),        //news
+            array ("", "index"),        //news
             array ("x", "list_news_of_type"),   //news/reports
             array ("x/x", "info_of_type()")    //news/reports/4004.Elena-DesignPatterns-Singleton
         ),
 
         "shop" => array (
-            array ("", "list_all_packets"),     //shop
+            array ("", "index"),     //shop
             array ("x", "about_packet"),        //shop/game1
             array ("x/bill", "bill_packet"),    //shop/game1/bill
             array ("x/start", "start_packet"),  //shop/game1/start
@@ -37,7 +37,7 @@ class div
         ),
 
         "user" => array (
-            array ("", "list_all_people"),           //user
+            array ("", "index"),           //user
             array ("best", "list_of_best_students"), //user/best
             array ("best/week",       "list_of_best_student_for_this_week"), //user/best/week
             array ("best/week/y-m-d", "list_of_best_student_for_spec_week"), //user/best/week/2017-01-02
@@ -46,7 +46,7 @@ class div
         ),
 
         "help" => array (
-            array ("", "about_project"),
+            array ("", "index"),
             array ("ask", "ask_question"),
             array ("ask/x", "show_question"),
             array ("faq", "show_faq"),
@@ -56,7 +56,7 @@ class div
         ),
 
         "me" => array (
-            array ("", "user_home"),
+            array ("", "index"),
             array ("join", "join_user"),
             array ("login", "login_user"),
             array ("login/repassword", "change_password"),
@@ -78,53 +78,51 @@ class div
     private function init_parts ()
     {
         if (isset ($_GET [DATA_GET]))
-            $this -> parts = explode ('/', trim($_GET [DATA_GET], '\\/'));
+            $this -> address = explode ('/', trim($_GET [DATA_GET], '\\/'));
         else
-            $this -> parts = array ();
+            $this -> address = array ();
     }
 
     private function init_class ()
     {
-        if (!isset ($this->parts[0]))
+        if (!isset ($this->address[0]))
             $this->class = DIVS_DEFAULT_CLASS;
-        else
-            $this->class = $this->parts [0];
+        else {
+            $this->class = $this->address [0];
+            array_shift($this->address);
+        }
     }
 
     private function find_method ()
     {
-        print_r ($this->parts); echo "<br>";
+        print_r ($this->address); echo "<br>";
         if (!isset($this->router[$this->class]))
             return DIVS_DEFAULT_METHOD;
-        foreach ($this->router[$this->class] as $item)
-            if ($this->admit($item[0]))
-                return $this->method = $item[1];
+        foreach ($this->router[$this->class] as $route_rule)
+            if ($this->admit($route_rule[0]))
+                return $this->method = $route_rule[1];
         return DIVS_DEFAULT_METHOD;
     }
 
-    protected function admit ($rule)
+    protected function admit ($route)
     {
-        $rule_items = explode ("/", trim($rule, "/"));
-        if (count($this->parts) > count ($rule_items))
+        if ($route == "" && count ($this->address) == 0) return true;
+
+        $route_items = explode ("/", trim($route, "/"));
+        if (count($this->address) != count ($route_items))
             return false;
-        $j = 1;
-        foreach ($rule_items as $item)
-        {
-            if ($j >= count($this->parts))
+
+        for ($j = 0; $j < count ($route_items); $j ++)
+            if (!$this->like($route_items[$j], $this->address[$j]))
                 return false;
-            if (!$this->like($item, $this->parts[$j++]))
-                return false;
-        }
-        echo $rule . "<br>";
+
         return true;
     }
 
     protected function like ($item, $part)
     {
-        echo "$item == $part ?";
-        if ($item == $part) return true;
-        if ($item == "x" && system\text::is_alpha($part)) return true;
-        echo "no<br>";
+        if ($part == $item) return true;
+        if ($part == "x" && system\text::is_alpha($item)) return true;
         return false;
     }
 
@@ -139,7 +137,7 @@ class div
         return;
 
         try {
-            $div = new $class ($this->parts);
+            $div = new $class ($this->address);
         } catch (\Exception $e) {
             return $this->set_error ("class " . $class . " not found");
         }
