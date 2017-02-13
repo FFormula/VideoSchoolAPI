@@ -147,7 +147,7 @@ class user extends api
 
     public function show_all_users ($get)
     {
-        $rows = db()->select ("SELECT id, name FROM users ORDER BY id");
+        $rows = db()->select ("SELECT id, name, status FROM users ORDER BY id");
         return $this->set_array ($rows);
     }
 }
