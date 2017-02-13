@@ -144,4 +144,10 @@ class user extends api
 
         return $this->set_array($user->pack());
     }
+
+    public function show_all_users ($get)
+    {
+        $rows = db()->select ("SELECT id, name FROM users ORDER BY id");
+        return $this->set_array ($rows);
+    }
 }
