@@ -5,9 +5,11 @@
     $api = new run\api();
 
     if ($api->run())
-        $answer = "ok";
+        $answer = $api->get_array();
     else
         $answer = $api->get_error();
 
-    echo $answer;
+    echo "<pre>";
+    print_r ($answer);
+    echo json_encode ($answer);
 

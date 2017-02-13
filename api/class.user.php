@@ -19,7 +19,7 @@ class user extends api
      *     [email] - valid unique user e-mail address
      *     [password] - user password, stored sha1-hash code
      */
-    public function join ($get)
+    public function do_join ($get)
     {
         if (!isset ($get ["name"]))
             return $this->set_error("[name] param does not set");
@@ -43,7 +43,7 @@ class user extends api
      *     [password] - user password
      * When login is successful, an authorized cookie will be placed.
      */
-    public function login ($get)
+    public function do_login ($get)
     {
         if (!isset ($get ["email"]))
             return $this->set_error("[email] param does not set");
@@ -54,7 +54,7 @@ class user extends api
         if (!$login->login($get["email"], $get["password"]))
             return $this->set_error ($login->get_error());
 
-        return true;
+        return $this->set_array ("ok");
     }
 
     /**
@@ -64,7 +64,7 @@ class user extends api
      *    [name] new name
      *    [password] confirm changes by current password
      */
-    public function edit_name ($get)
+    public function do_edit_name ($get)
     {
         if (!isset($get["name"]))
             return $this->set_error("[name] param does not set");
@@ -75,7 +75,7 @@ class user extends api
         if (!$login->update_name($get["name"], $get["password"]))
             return $this->set_error ($login->get_error());
 
-        return true;
+        return $this->set_array ("ok");
     }
 
     /**
@@ -85,7 +85,7 @@ class user extends api
      *     [email] new e-mail
      *     [password] confirm changes by current password
      */
-    public function edit_email ($get)
+    public function do_edit_email ($get)
     {
         if (!isset($get["email"]))
             return $this->set_error("[email] param does not set");
@@ -96,7 +96,7 @@ class user extends api
         if (!$login->update_email($get["email"], $get["password"]))
             return $this->set_error ($login->get_error());
 
-        return true;
+        return $this->set_array ("ok");
     }
 
     /**
@@ -106,7 +106,7 @@ class user extends api
      *     [new_password] new password
      *     [password] confirm changes by current password
      */
-    public function edit_password ($get)
+    public function do_edit_password ($get)
     {
         if (!isset($get["new_password"]))
             return $this->set_error("[new_password] param does not set");
@@ -117,7 +117,7 @@ class user extends api
         if (!$login->update_password($get["new_password"], $get["password"]))
             return $this->set_error ($login->get_error());
 
-        return true;
+        return $this->set_array ("ok");
     }
 
     /**
@@ -125,12 +125,23 @@ class user extends api
      * @return bool true
      * Logout and close user session
      */
-    public function logout ($get)
+    public function do_logout ($get)
     {
         $login = new model\login();
         $login->logout();
 
-        return true;
+        return $this->set_array ("ok");
     }
 
+    public function show_user_by_name ($get)
+    {
+        if (!isset ($get ["name"]))
+            return $this->set_error("[name] param does not set");
+
+        $user = new \table\user ();
+        if (!$user->select_by_name($get ["name"]))
+            return $this->set_error ("user not found");
+
+        return $this->set_array($user->pack());
+    }
 }

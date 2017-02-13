@@ -38,7 +38,7 @@ class api
         if (!$api->$method ($_GET))
             return $this->set_error ($api->get_error());
 
-        return true;
+        return $this->set_array ($api->get_array());
     }
 
     private function init_class ()
@@ -60,5 +60,11 @@ class api
     protected $error = "";
     public function get_error () { return $this->error; }
     protected function set_error ($message) { $this->error = $message; return false; }
+
+    protected $array = "";
+    public function get_array () { return $this->array; }
+    protected function set_array ($array) { $this->array = $array; return true; }
+
+
 
 }
