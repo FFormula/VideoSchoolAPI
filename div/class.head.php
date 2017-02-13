@@ -1,6 +1,6 @@
 <?php
 
-namespace divs;
+namespace div;
 
 class head
 {
@@ -15,5 +15,19 @@ class head
         $this->description = "my description";
         $this->keywords = "my,keywords";
         $this->image = "https://www.videosharp.info/data/img/pics/robot.png";
+    }
+    
+    function pack ()
+    {
+        return array 
+        (
+            "div_head" => array 
+                          (
+                              "title" => $this->title,
+                              "description" => $this->description,
+                              "keywords" => $this->keywords,
+                              "image" => $this->image
+                          )
+        );
     }
 }

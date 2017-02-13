@@ -156,25 +156,20 @@ class div
 
         echo "<br> class/method: " . $class . " -> " . $this->method . " ()";
         echo "<br> Args: "; print_r ($this->args);
-        return;
 
-        try {
-            $div = new $class ($this->bars);
-        } catch (\Exception $e) {
-            return $this->set_error ("class " . $class . " not found");
-        }
+        $div = new $class ($this->bars);
 
-        if (!system\text::is_alpha($this->method))
-            return $this->set_error ("incorrect symbols in method param");
         $method = $this->method;
 
         if (!is_callable(array ($div, $method)))
-            return $this->set_error ("api class/method not found: " . $class . "/" . $method);
+            return $this->set_error ("api class->method not found: " . $class . "->" . $method);
 
-        if (!$div->$method ())
+        $arr = $div->$method ($this->args);
+        if (!$arr)
             return $this->set_error ($div->get_error());
 
-        return $div->get_packet ();
+        print_r ($arr);
+//        return $div->get_packet ();
     }
 
     protected $error = "";
