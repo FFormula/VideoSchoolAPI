@@ -11,5 +11,6 @@
 
     echo "<pre>";
     print_r ($answer);
-    echo json_encode ($answer);
+    // echo "\n" . json_encode ($answer);
+
 
