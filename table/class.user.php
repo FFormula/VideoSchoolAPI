@@ -15,16 +15,6 @@ class user extends table
         if ($id) $this->select($id);
     }
 
-    public function pack ()
-    {
-        return array (
-            "id" => $this->id,
-            "name" => $this->name,
-            "email" => $this->email,
-            "status" => $this->status
-        );
-    }
-
     public function insert ()
     {
         db()->query(
@@ -62,5 +52,13 @@ class user extends table
     public function select_by_email ($email)
     {
         return $this->select_from ("users", "email", strtolower($email));
+    }
+
+    public function select_all_users ()
+    {
+        return db()->select (
+            "SELECT id, name, status 
+               FROM users 
+           ORDER BY id");
     }
 }

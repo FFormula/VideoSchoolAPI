@@ -90,6 +90,33 @@ class div extends system\resultable
         $this->init_route();
     }
 
+    public function run ()
+    {
+        if (!system\text::is_alpha($this->class))
+            return $this->set_error ("incorrect symbols in class param");
+        $class = "\\div\\" . $this->class;
+
+        //echo "<br> class/method: " . $class . " -> " . $this->method . " ()";
+        //echo "<br> Args: "; print_r ($this->args);
+
+        $div = new $class ($this->bars);
+
+        $method = $this->method;
+
+        if (!is_callable(array ($div, $method)))
+            return $this->set_error ("api class->method not found: " . $class . "->" . $method);
+
+        if (!$div->$method ($this->args))
+            return $this->set_error ($div->get_error());
+
+        return $this->set_array ($div->get_array());
+    }
+
+
+
+
+    
+
     private function init_parts ()
     {
         if (isset ($_GET [DATA_GET]))
@@ -125,7 +152,7 @@ class div extends system\resultable
                 $this->args [substr ($path[$j], 1)] = $this->bars [$j];
     }
 
-    protected function admit ($route)
+    private function admit ($route)
     {
         $route_items = explode ("/", trim($route, "/"));
 
@@ -140,34 +167,11 @@ class div extends system\resultable
         return true;
     }
 
-    protected function like ($item, $bar)
+    private function like ($item, $bar)
     {
         if ($item == $bar) return true;
         if (substr($item, 0, 1) == "@") return true;
         return false;
     }
 
-    public function run ()
-    {
-        $this->error = "";
-        if (!system\text::is_alpha($this->class))
-            return $this->set_error ("incorrect symbols in class param");
-        $class = "\\div\\" . $this->class;
-
-        echo "<br> class/method: " . $class . " -> " . $this->method . " ()";
-        echo "<br> Args: "; print_r ($this->args);
-
-        $div = new $class ($this->bars);
-
-        $method = $this->method;
-
-        if (!is_callable(array ($div, $method)))
-            return $this->set_error ("api class->method not found: " . $class . "->" . $method);
-
-        $arr = $div->$method ($this->args);
-        if (!$arr)
-            return $this->set_error ($div->get_error());
-
-        return $this->set_array ($div->get_array());
-    }
 }

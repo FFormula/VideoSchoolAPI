@@ -27,7 +27,8 @@ class user_info extends system\resultable
 
     public function get_all_user_list ()
     {
-        $rows = db()->select ("SELECT id, name, status FROM users ORDER BY id");
+        $user = new table\user ();
+        $rows = $user->select_all_users();
         return $this->set_array ($rows);
     }
 }

@@ -9,7 +9,7 @@ class table
         $row = db()->select_row (
             "SELECT *
                FROM " . $table . " 
-              WHERE " . $field . " = '" . $value .
+              WHERE " . $field . " = '" . addslashes($value) .
            "' LIMIT 1");
         if (!$row) return false;
         foreach ($row as $name => $value)
