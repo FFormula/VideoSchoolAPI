@@ -62,7 +62,7 @@ class login extends system\resultable
         if ($user->status != "open")
             return $this->set_error("unknown user status");
 
-        system\session::set_user($user->pack());
+        session::set_user($user->pack());
         return true;
     }
 
@@ -74,12 +74,12 @@ class login extends system\resultable
      */
     public function update_name ($name, $password)
     {
-        if (!system\session::is_logged())
+        if (!session::is_logged())
             return $this->set_error("no login");
 
         if (!$this->check_name($name)) return false;
 
-        $user = new table\user(system\session::get_user()["id"]);
+        $user = new table\user(session::get_user()["id"]);
         if (!$user->id)
             return $this->set_error("user not found");
         if ($user->passhash != $this->hash_password($user->name, $password))
@@ -100,12 +100,12 @@ class login extends system\resultable
      */
     public function update_email ($email, $password)
     {
-        if (!system\session::is_logged())
+        if (!session::is_logged())
             return $this->set_error("no login");
 
         if (!$this->check_email($email)) return false;
 
-        $user = new table\user(system\session::get_user()["id"]);
+        $user = new table\user(session::get_user()["id"]);
         if (!$user->id)
             return $this->set_error("user not found");
         if ($user->passhash != $this->hash_password($user->name, $password))
@@ -125,12 +125,12 @@ class login extends system\resultable
      */
     public function update_password ($new_password, $old_password)
     {
-        if (!system\session::is_logged())
+        if (!session::is_logged())
             return $this->set_error("no login");
 
         if (!$this->check_password($new_password)) return false;
         
-        $user = new table\user(system\session::get_user()["id"]);
+        $user = new table\user(session::get_user()["id"]);
         if (!$user->id)
             return $this->set_error("user not found");
         if ($user->passhash != $this->hash_password($user->name, $old_password))
@@ -148,7 +148,7 @@ class login extends system\resultable
      */
     public function logout ()
     {
-        system\session::logout();
+        session::logout();
         return true;
     }
 
