@@ -29,4 +29,10 @@ class resultable
         return true;
     }
 
+    protected function ok ()
+    {
+        $this->array = array ("result" => "ok");
+        return true;
+    }
+
 }

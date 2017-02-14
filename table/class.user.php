@@ -29,10 +29,10 @@ class user extends table
     {
         db()->query(
             "INSERT INTO users
-                SET name = '" . strtolower($this->name) .
-                "', email = '" . strtolower($this->email) .
-                "', status = '" . $this->status .
-                "', passhash = '" . $this->passhash . "'");
+                SET name = '" . addslashes(strtolower($this->name)) .
+                "', email = '" . addslashes(strtolower($this->email)) .
+                "', status = '" . addslashes($this->status) .
+                "', passhash = '" . addslashes($this->passhash) . "'");
         $this->id = db()->insert_id();
     }
 
@@ -47,10 +47,10 @@ class user extends table
         if (!$this->id) return;
         db()->query(
             "UPDATE users
-                SET name = '" . strtolower($this->name) .
-                "', email = '" . strtolower($this->email) .
-                "', status = '" . $this->status .
-                "', passhash = '" . $this->passhash .
+                SET name = '" . addslashes(strtolower($this->name)) .
+                "', email = '" . addslashes(strtolower($this->email)) .
+                "', status = '" . addslashes($this->status) .
+                "', passhash = '" . addslashes($this->passhash) .
            "' WHERE id = '" . $this->id . "'");
     }
 

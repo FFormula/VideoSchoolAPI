@@ -32,7 +32,7 @@ class user extends system\resultable
         if (!$login->join($get["name"], $get["email"], $get["password"]))
             return $this->set_error($login->get_error());
 
-        return true;
+        return $this->ok();
     }
 
     /**
@@ -54,7 +54,7 @@ class user extends system\resultable
         if (!$login->login($get["email"], $get["password"]))
             return $this->set_error ($login->get_error());
 
-        return $this->set_array ("ok");
+        return $this->ok();
     }
 
     /**
@@ -75,7 +75,7 @@ class user extends system\resultable
         if (!$login->update_name($get["name"], $get["password"]))
             return $this->set_error ($login->get_error());
 
-        return $this->set_array ("ok");
+        return $this->ok();
     }
 
     /**
@@ -96,7 +96,7 @@ class user extends system\resultable
         if (!$login->update_email($get["email"], $get["password"]))
             return $this->set_error ($login->get_error());
 
-        return $this->set_array ("ok");
+        return $this->ok();
     }
 
     /**
@@ -117,7 +117,7 @@ class user extends system\resultable
         if (!$login->update_password($get["new_password"], $get["password"]))
             return $this->set_error ($login->get_error());
 
-        return $this->set_array ("ok");
+        return $this->ok();
     }
 
     /**
@@ -130,27 +130,7 @@ class user extends system\resultable
         $login = new model\login();
         $login->logout();
 
-        return $this->set_array ("ok");
+        return $this->ok();
     }
 
-    public function show_user_by_name ($get)
-    {
-        if (!isset ($get ["name"]))
-            return $this->set_error("[name] param does not set");
-
-        $user_info = new model\user_info();
-        if (!$user_info->get_user_info_by_name($get ["name"]))
-            return $this->set_error ("user not found");
-
-        return $this->set_array($user_info->get_array());
-    }
-
-    public function show_all_users ($get)
-    {
-        $user_info = new model\user_info();
-        if (!$user_info->get_all_user_list())
-            return $this->set_error ("user not found");
-
-        return $this->set_array($user_info->get_array());
-    }
 }

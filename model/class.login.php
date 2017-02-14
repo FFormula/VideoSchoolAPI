@@ -37,7 +37,8 @@ class login extends system\resultable
         $user->status = "wait";
         $user->passhash = $this->hash_password($name, $password);
         $user->insert();
-        return true;
+
+        return $this->ok();
     }
 
     /**
@@ -63,7 +64,7 @@ class login extends system\resultable
             return $this->set_error("unknown user status");
 
         session::set_user($user->pack());
-        return true;
+        return $this->ok();
     }
 
     /**
@@ -89,7 +90,7 @@ class login extends system\resultable
         $user->name = $name;
         $user->passhash = $this->hash_password($name, $password);
         $user->update();
-        return true;
+        return $this->ok();
     }
 
     /**
@@ -114,7 +115,7 @@ class login extends system\resultable
             return $this->set_error("email is the same");
         $user->email = $email;
         $user->update();
-        return true;
+        return $this->ok();
     }
 
     /**
@@ -139,7 +140,7 @@ class login extends system\resultable
             return $this->set_error("password is the same");
         $user->passhash = $this->hash_password($user->name, $new_password);
         $user->update();
-        return true;
+        return $this->ok();
     }
 
     /**
@@ -149,8 +150,11 @@ class login extends system\resultable
     public function logout ()
     {
         session::logout();
-        return true;
+        return $this->ok();
     }
+
+
+
 
     protected function check_name ($name)
     {
