@@ -1,6 +1,6 @@
 <?php
 
-namespace system;
+namespace table;
 
 class db
 {

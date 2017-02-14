@@ -4,7 +4,7 @@ namespace run;
 
 use \system;
 
-class div
+class div extends system\resultable
 {
     private $bars;
     private $class;
@@ -168,11 +168,6 @@ class div
         if (!$arr)
             return $this->set_error ($div->get_error());
 
-        print_r ($arr);
-//        return $div->get_packet ();
+        return $this->set_array ($div->get_array());
     }
-
-    protected $error = "";
-    public function get_error () { return $this->error; }
-    protected function set_error ($message) { $this->error = $message; return false; }
 }

@@ -3,13 +3,13 @@
 namespace api;
 
 use model;
-
+use system;
 /**
  * Class user
  * @package api
  * User API functions list:
  */
-class user extends api
+class user extends system\resultable
 {
     /**
      * @param $get
@@ -138,16 +138,19 @@ class user extends api
         if (!isset ($get ["name"]))
             return $this->set_error("[name] param does not set");
 
-        $user = new \table\user ();
-        if (!$user->select_by_name($get ["name"]))
+        $user_info = new model\user_info();
+        if (!$user_info->get_user_info_by_name($get ["name"]))
             return $this->set_error ("user not found");
 
-        return $this->set_array($user->pack());
+        return $this->set_array($user_info->get_array());
     }
 
     public function show_all_users ($get)
     {
-        $rows = db()->select ("SELECT id, name, status FROM users ORDER BY id");
-        return $this->set_array ($rows);
+        $user_info = new model\user_info();
+        if (!$user_info->get_all_user_list())
+            return $this->set_error ("user not found");
+
+        return $this->set_array($user_info->get_array());
     }
 }

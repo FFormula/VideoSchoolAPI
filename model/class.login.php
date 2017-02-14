@@ -11,7 +11,7 @@ use \system;
  * Register, authorize operation
  * Change password, update user name and email
  */
-class login
+class login extends system\resultable
 {
     /**
      * @param $name user name
@@ -183,10 +183,5 @@ class login
     {
         return sha1 ($name . "/" . $password);
     }
-
-
-    protected $error = "";
-    public function get_error () { return $this->error; }
-    protected function set_error ($message) { $this->error = $message; return false; }
 
 }

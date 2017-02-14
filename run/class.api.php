@@ -8,7 +8,7 @@ use \system;
  * Class run - run an API function
  * @package system
  */
-class api
+class api extends system\resultable
 {
     private $class; // class to be used in API
     private $method; // method to be called
@@ -56,15 +56,5 @@ class api
         else
             $this->method = $_GET ["method"];
     }
-
-    protected $error = "";
-    public function get_error () { return $this->error; }
-    protected function set_error ($message) { $this->error = $message; return false; }
-
-    protected $array = "";
-    public function get_array () { return $this->array; }
-    protected function set_array ($array) { $this->array = $array; return true; }
-
-
 
 }

@@ -19,5 +19,5 @@
 
     function db()
     {
-        return \system\db::getDB();
+        return \table\db::getDB();
     }
