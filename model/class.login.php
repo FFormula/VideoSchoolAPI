@@ -63,7 +63,6 @@ class login extends system\resultable
         if ($user->status != "open")
             return $this->set_error("unknown user status");
 
-        session::set_user($user->pack());
         return $this->ok();
     }
 

@@ -1,10 +1,10 @@
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <div class="navbar navbar-inverse footer">
 	<div class="container">
-		<div class="row tail"> 
+		<div class="row tail">
 			<div class="col-xs-3 text-left">
 				<h4>О проекте</h4>
 				<ul class="nav nav-pills nav-stacked">
-					<li><a href="javascript:void(0)" title="Link text">Link text</a></li>
 					<li><a href="javascript:void(0)" title="Link text">Link text</a></li>
 				</ul>
 			</div>
@@ -12,13 +12,11 @@
 				<h4>Миссия</h4>
 				<ul class="nav nav-pills nav-stacked">
 					<li><a href="javascript:void(0)" title="Link text">Link text</a></li>
-					<li><a href="javascript:void(0)" title="Link text">Link text</a></li>
 				</ul>
 			</div>
 			<div class="col-xs-3 text-left">
 				<h4>Контакты</h4>
 				<ul class="nav nav-pills nav-stacked">
-					<li><a href="javascript:void(0)" title="Link text">Link text</a></li>
 					<li><a href="javascript:void(0)" title="Link text">Link text</a></li>
 				</ul>
 			</div>

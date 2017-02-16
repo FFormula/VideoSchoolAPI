@@ -4,7 +4,7 @@ namespace run;
 
 use \system;
 
-class div extends system\resultable
+class page extends system\resultable
 {
     private $bars;
     private $class;
@@ -20,7 +20,14 @@ class div extends system\resultable
      */
     private $router = array
     (
-        array ("news", "news/show_all_news"),
+        array ("", "auth/welcome"),
+        array ("login", "auth/form_login"),
+        array ("start", "auth/form_join"),
+        array ("user/change/password", "auth/form_change_password"),
+        array ("user/change/login", "auth/form_change_name"),
+        array ("user/change/email", "auth/form_change_email"),
+
+/*        array ("news", "news/show_all_news"),
         array ("news/find/@text", "news/show_all_news_by_find_text"),
         array ("news/@subject", "news/show_all_news_by_subject"),
         array ("news/@subject/page/@page", "news/show_all_news_by_subject_on_page"),
@@ -79,9 +86,9 @@ class div extends system\resultable
         array ("me/payments", "cabinet/show_all_my_payments"),
         array ("me/payouts", "cabinet/show_all_my_payouts"),
         array ("me/refers", "cabinet/show_all_my_refers"),
-        array ("me/*", "cabinet/show_error"),
+        array ("me/*", "cabinet/show_error"),*/
 
-        array ("*", "/news/show_error")
+        array ("*", "/system/error")
     );
 
     public function __construct()
@@ -94,28 +101,37 @@ class div extends system\resultable
     {
         if (!is_alpha($this->class))
             return $this->set_error ("incorrect symbols in class param");
-        $class = "\\div\\" . $this->class;
+        $class = "\\page\\" . $this->class;
 
-        //echo "<br> class/method: " . $class . " -> " . $this->method . " ()";
-        //echo "<br> Args: "; print_r ($this->args);
+        echo "<br> class/method: " . $class . " -> " . $this->method . " ()";
+        echo "<br> Args: "; print_r ($this->args);
 
-        $div = new $class ($this->bars);
+        $page = new $class ();
 
         $method = $this->method;
 
-        if (!is_callable(array ($div, $method)))
+        if (!is_callable(array ($page, $method)))
             return $this->set_error ("api class->method not found: " . $class . "->" . $method);
 
-        if (!$div->$method ($this->args))
-            return $this->set_error ($div->get_error());
+        if (count ($_POST) == 0)
+            $page->$method ($this->args);
+        else
+            $page->{$method."_post"} ($this->args, $_POST);
 
-        return $this->set_array ($div->get_array());
+        $this->set_error ($page->get_error());
+        $this->set_array ($page->get_array());
+
+        return true;
     }
 
+    public function get_class () { return $this->class; }
+    public function get_method () { return $this->method; }
 
 
 
-    
+
+
+
 
     private function init_parts ()
     {
@@ -128,7 +144,7 @@ class div extends system\resultable
     private function init_route ()
     {
         $rule = $this->find_route();
-
+        print_r ($rule);
         $path = explode("/", $rule [0]);
         $this->init_args($path);
 

@@ -23,7 +23,7 @@ class user extends table
                 "', email = '" . addslashes(strtolower($this->email)) .
                 "', status = '" . addslashes($this->status) .
                 "', passhash = '" . addslashes($this->passhash) . "'");
-        $this->id = db()->insert_id();
+        $this->id = db::getDB()->insert_id();
     }
 
     public function select ($id)

@@ -20,7 +20,7 @@ class user_info extends system\resultable
                 "user_id" => $user->id,
                 "name" => $user->name,
                 "status" => $user->status,
-                "url" => "http://www.videojava.info/me/" . $user->name
+                "avatar" => "https://www.videosharp.info/data/img/photos/avatar.png"
             )
         );
     }
