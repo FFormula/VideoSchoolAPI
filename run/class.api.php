@@ -22,13 +22,13 @@ class api extends system\resultable
     public function run ()
     {
         $this->error = "";
-        if (!system\text::is_alpha($this->class))
+        if (!is_alpha($this->class))
             return $this->set_error ("incorrect symbols in class param");
         $class = "\\api\\" . $this->class;
 
         $api = new $class ();
 
-        if (!system\text::is_alpha($this->method))
+        if (!is_alpha($this->method))
             return $this->set_error ("incorrect symbols in method param");
         $method = $this->method;
 

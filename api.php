@@ -1,6 +1,5 @@
 <?php
-    include "config.php";
-    include "header.php";
+    include "system/inc.header.php";
 
     $api = new run\api();
 

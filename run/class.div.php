@@ -92,7 +92,7 @@ class div extends system\resultable
 
     public function run ()
     {
-        if (!system\text::is_alpha($this->class))
+        if (!is_alpha($this->class))
             return $this->set_error ("incorrect symbols in class param");
         $class = "\\div\\" . $this->class;
 

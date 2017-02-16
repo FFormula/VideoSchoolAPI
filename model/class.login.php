@@ -158,7 +158,7 @@ class login extends system\resultable
 
     protected function check_name ($name)
     {
-        if (!system\text::is_alpha($name))
+        if (!is_alpha($name))
             return $this->set_error("name incorrect, use letters/digits/./_, start with letter");
         if (strlen($name) < USER_NAME_MIN_LENGTH)
             return $this->set_error("name is too short");
@@ -169,7 +169,7 @@ class login extends system\resultable
 
     protected function check_email ($email)
     {
-        if (!system\text::is_email($email))
+        if (!is_email($email))
             return $this->set_error("email incorrect");
         return true;
     }

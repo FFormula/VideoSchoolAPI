@@ -1,8 +1,7 @@
 <?php
-    include "config.php";
-    include "header.php";
+    include "system/inc.header.php";
 
-    require_once "lib/Smarty.class.php";
+    require_once ROOT . "data/smarty/Smarty.class.php";
     $smart = new \Smarty ();
     $smart->caching = false;
     $smart->debugging = false;

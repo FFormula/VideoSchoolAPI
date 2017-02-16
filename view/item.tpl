@@ -1,6 +1,6 @@
 <div class="row item">
 	<div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
-		<a href="javascript:void(0)" class="thumbnail" title=""><img src="img/lesson-1.jpg" alt=""/></a>
+		<a href="javascript:void(0)" class="thumbnail" title=""><img src="/data/img/lesson-1.jpg" alt=""/></a>
 	</div>
 	<div class="col-lg-7 col-md-7 col-sm-7 col-xs-9">
 		<a href="javascript:void(0)" title="">

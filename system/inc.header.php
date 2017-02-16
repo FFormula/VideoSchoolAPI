@@ -1,4 +1,7 @@
 <?php
+    include "system/inc.config.php";
+    include ROOT . "system/inc.fun.php";
+
     session_start();
     header('Content-Type: text/html; charset=utf-8');
     date_default_timezone_set("Europe/Moscow");
@@ -11,13 +14,8 @@
         $path = explode ("\\", $class);
         if (count ($path) != 2) return;
         $file = ROOT . $path[0] . "/class." . $path[1] . ".php";
-        //echo "Class [" . $class ."] ";
-        //echo "from file [" . $file . "]<br>";
+        echo "Class [" . $class ."] ";
+        echo "from file [" . $file . "]<br>";
         if (!file_exists($file)) return;
         require_once $file;
-    }
-
-    function db()
-    {
-        return \table\db::getDB();
     }

@@ -17,7 +17,7 @@ class user extends table
 
     public function insert ()
     {
-        db()->query(
+        db::getDB()->query(
             "INSERT INTO users
                 SET name = '" . addslashes(strtolower($this->name)) .
                 "', email = '" . addslashes(strtolower($this->email)) .
@@ -35,7 +35,7 @@ class user extends table
     public function update ()
     {
         if (!$this->id) return;
-        db()->query(
+        db::getDB()->query(
             "UPDATE users
                 SET name = '" . addslashes(strtolower($this->name)) .
                 "', email = '" . addslashes(strtolower($this->email)) .
@@ -56,7 +56,7 @@ class user extends table
 
     public function select_all_users ()
     {
-        return db()->select (
+        return db::getDB()->select (
             "SELECT id, name, status 
                FROM users 
            ORDER BY id");

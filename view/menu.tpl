@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse custom-navbar">
 	<div class="container">
 		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 navbar-header">
-			<a href="javascript:void(0)" class="header-logo" title=""><img src="img/fmap.png" alt="" title=""/></a>
+			<a href="javascript:void(0)" class="header-logo" title=""><img src="/data/img/fmap.png" alt="" title=""/></a>
 		</div>
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 collapse navbar-collapse">
 			<ul class="nav navbar-nav">

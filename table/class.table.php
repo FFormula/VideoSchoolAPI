@@ -6,7 +6,7 @@ class table
 {
     protected function select_from ($table, $field, $value)
     {
-        $row = db()->select_row (
+        $row = db::getDB()->select_row (
             "SELECT *
                FROM " . $table . " 
               WHERE " . $field . " = '" . addslashes($value) .

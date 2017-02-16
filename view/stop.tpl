@@ -1,5 +1,5 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/data/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 			jQuery(".promo-close").click(function() {

@@ -5,3 +5,5 @@
 log/
 templates_c/
 config.php
+*.log
+data/view_c

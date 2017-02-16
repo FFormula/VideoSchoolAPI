@@ -354,7 +354,7 @@ class Smarty extends Smarty_Internal_TemplateBase
      *
      * @var string
      */
-    protected $compile_dir = './templates_c/';
+    protected $compile_dir = './data/view_c/';
 
     /**
      * flag if template_dir is normalized

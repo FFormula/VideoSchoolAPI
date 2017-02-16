@@ -24,7 +24,7 @@
 			</div>
 			<div class="col-xs-3 text-center">
 				<a href="javascript:void(0)" class="footer-logo" title="">
-					<img src="https://www.videosharp.info/data/img/fmap.png" alt=""/>
+					<img src="/data/img/fmap.png" alt=""/>
 				</a>
 			</div>
 		</div>
