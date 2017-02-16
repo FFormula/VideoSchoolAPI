@@ -103,8 +103,8 @@ class page extends system\resultable
             return $this->set_error ("incorrect symbols in class param");
         $class = "\\page\\" . $this->class;
 
-        echo "<br> class/method: " . $class . " -> " . $this->method . " ()";
-        echo "<br> Args: "; print_r ($this->args);
+        //echo "<br> class/method: " . $class . " -> " . $this->method . " ()";
+        //echo "<br> Args: "; print_r ($this->args);
 
         $page = new $class ();
 
@@ -144,7 +144,6 @@ class page extends system\resultable
     private function init_route ()
     {
         $rule = $this->find_route();
-        print_r ($rule);
         $path = explode("/", $rule [0]);
         $this->init_args($path);
 
@@ -153,7 +152,6 @@ class page extends system\resultable
 
     private function find_route ()
     {
-        print_r ($this->bars);
         foreach ($this->router as $rule)
             if ($this->admit($rule[0]))
                 return $rule;

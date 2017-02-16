@@ -10,5 +10,5 @@
     $smart->assign("arr", $page->get_array());
     $smart->assign("err", $page->get_error());
     $view_file = $page->get_class() . "/" . $page->get_method() . ".tpl";
-    echo $view_file . "<br>";
+    //echo $view_file . "<br>";
     $smart->display($view_file);

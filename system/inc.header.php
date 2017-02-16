@@ -14,8 +14,8 @@
         $path = explode ("\\", $class);
         if (count ($path) != 2) return;
         $file = ROOT . $path[0] . "/class." . $path[1] . ".php";
-        echo "Class [" . $class ."] ";
-        echo "from file [" . $file . "]<br>";
+        //echo "Class [" . $class ."] ";
+        //echo "from file [" . $file . "]<br>";
         if (!file_exists($file)) return;
         require_once $file;
     }
