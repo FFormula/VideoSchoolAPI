@@ -1,5 +1,5 @@
 <?php
-    include "system/inc.header.php";
+    include "../system/inc.header.php";
 
     $page = new \run\page();
     $page->run();
@@ -10,7 +10,7 @@
         die ();
     }
 
-    include ROOT . "data/smarty/Smarty.class.php";
+    include ROOT . "smarty/Smarty.class.php";
     $smart = new Smarty ();
     $smart->template_dir = SMARTY_TEMPLATES_DIR;
     $smart->assign("arr", $page->get_array());

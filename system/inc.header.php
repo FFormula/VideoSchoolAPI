@@ -1,5 +1,5 @@
 <?php
-    include "system/inc.config.php";
+    include     "../system/inc.config.php";
     include ROOT . "system/inc.lang.php";
     include ROOT . "system/inc.fun.php";
 
