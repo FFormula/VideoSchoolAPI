@@ -20,73 +20,8 @@ class page extends system\resultable
      */
     private $router = array
     (
-        array ("", "auth/welcome"),
-        array ("login", "auth/form_login"),
-        array ("start", "auth/form_join"),
-        array ("user/change/password", "auth/form_change_password"),
-        array ("user/change/login", "auth/form_change_name"),
-        array ("user/change/email", "auth/form_change_email"),
-
-/*        array ("news", "news/show_all_news"),
-        array ("news/find/@text", "news/show_all_news_by_find_text"),
-        array ("news/@subject", "news/show_all_news_by_subject"),
-        array ("news/@subject/page/@page", "news/show_all_news_by_subject_on_page"),
-        array ("news/@subject/@news", "news/show_one_news_by_subject_news"),
-        array ("news/*", "news/show_error"),
-
-        array ("shop", "shop/show_all_packets"),
-        array ("shop/find/@text", "shop/show_all_packets_by_find_text"),
-        array ("shop/rules", "shop/show_rules_of_shopping"),
-        array ("shop/@packet", "shop/show_one_packet_by_id"),
-        array ("shop/@packet/bill", "shop/show_one_packet_bill_form"),
-        array ("shop/@packet/pay/@bill", "shop/show_one_packet_pay_form_by_bill"),
-        array ("shop/@packet/start", "shop/show_one_packet_subscribe_form"),
-        array ("shop/@packet/video", "shop/show_all_video_reports_for_packet"),
-        array ("shop/@packet/reports", "shop/show_all_reports_for_packet"),
-        array ("shop/@packet/reports/@lesson", "shop/show_all_reports_for_packet_lesson"),
-        array ("shop/@packet/lessons", "shop/show_all_lessons_for_packet"),
-        array ("shop/@packet/posts", "shop/show_all_posts_for_packet"),
-        array ("shop/@packet/posts/@lesson", "shop/show_all_posts_for_packet_lesson"),
-        array ("shop/@packet/@lesson", "shop/show_one_lesson_by_id_for_packet"),
-        array ("shop/*", "shop/show_error"),
-
-        array ("user", "user/show_all_users"),
-        array ("user/online", "user/show_all_users_online"),
-        array ("user/best", "user/show_all_users_are_best"),
-        array ("user/best/week", "user/show_all_users_are_best_of_week"),
-        array ("user/club", "user/show_all_users_in_club"),
-        array ("user/@name", "user/show_one_user_by_name"),
-        array ("user/@name/posts", "user/show_all_posts_of_user"),
-        array ("user/@name/posts/on/@packet", "user/show_all_posts_of_user_by_packet"),
-        array ("user/@name/posts/with/@friend", "user/show_all_posts_between_user_and_friend"),
-        array ("user/@name/reports", "user/show_all_reports_of_user"),
-        array ("user/@name/reports/on/@packet", "user/show_all_reports_of_user_by_packet"),
-        array ("user/@name/video", "user/show_all_videos_of_user"),
-        array ("user/*", "user/show_error"),
-
-        array ("help", "help/show_help_about"),
-        array ("help/ask", "help/show_ask_form"),
-        array ("help/ask/@id", "help/show_all_answers_for_ask"),
-        array ("help/faq", "help/show_all_faq"),
-        array ("help/rules", "help/show_rules"),
-        array ("help/contacts", "help/show_all_contacts"),
-        array ("help/@topic", "help/show_all_articles_by_topic"),
-        array ("help/@topic/@id", "help/show_one_article_by_topic_id"),
-        array ("help/*", "help/show_error"),
-
-        array ("me", "cabinet/show_user_info"),
-        array ("me/join", "cabinet/show_join_form"),
-        array ("me/login", "cabinet/show_login_form"),
-        array ("me/login/password", "cabinet/show_change_password_form"),
-        array ("me/edit", "cabinet/show_all_edits"),
-        array ("me/edit/@section", "cabinet/show_all_options_by_section"),
-        array ("me/stats", "cabinet/show_main_stats"),
-        array ("me/posts", "cabinet/show_all_my_posts"),
-        array ("me/packets", "cabinet/show_all_my_packets"),
-        array ("me/payments", "cabinet/show_all_my_payments"),
-        array ("me/payouts", "cabinet/show_all_my_payouts"),
-        array ("me/refers", "cabinet/show_all_my_refers"),
-        array ("me/*", "cabinet/show_error"),*/
+        array ("", "info/index"),
+        array ("info/index", "info/index"),
 
         array ("*", "/system/error")
     );
@@ -120,6 +55,9 @@ class page extends system\resultable
 
         $this->set_error ($page->get_error());
         $this->set_array ($page->get_array());
+
+        //print_r ($this->get_array());
+        //print_r ($this->get_error());
 
         return true;
     }

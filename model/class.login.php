@@ -25,8 +25,8 @@ class login extends system\resultable
         if (!$this->check_name($name)) return false;
         if (!$this->check_email($email)) return false;
         if (!$this->check_password($password)) return false;
-        $user = new table\user();
 
+        $user = new table\user();
         if ($user->select_by_name($name))
             return $this->set_error ("user name taken");
         if ($user->select_by_email($email))
@@ -88,7 +88,8 @@ class login extends system\resultable
             return $this->set_error("name is the same");
         $user->name = $name;
         $user->passhash = $this->hash_password($name, $password);
-        $user->update();
+        if (!$user->update())
+            return $this->set_error("name is the same");
         return $this->ok();
     }
 
@@ -113,7 +114,7 @@ class login extends system\resultable
         if ($user->email == $email)
             return $this->set_error("email is the same");
         $user->email = $email;
-        $user->update();
+        $user->update(); // TODO - NEED CHECKING
         return $this->ok();
     }
 

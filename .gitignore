@@ -4,6 +4,6 @@
 .idea/
 log/
 templates_c/
-config.php
+system/inc.config.php
 *.log
 data/view_c

@@ -43,7 +43,7 @@ class db
      * @throws Exception on MySQL error with query and error message
      */
     public function query ($query) 
-    {
+    { // TODO - RETURN FALSE ON ERROR
         $result = $this -> mi -> query ($query);
         if (!$result)
             throw new Exception (

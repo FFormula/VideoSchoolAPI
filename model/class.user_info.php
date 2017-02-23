@@ -28,7 +28,7 @@ class user_info extends system\resultable
     public function get_all_user_list ()
     {
         $user = new table\user ();
-        $rows = $user->select_all_users();
+        $rows = $user->select_all();
         return $this->set_array ($rows);
     }
 }

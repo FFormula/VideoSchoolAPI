@@ -1,0 +1,2 @@
+<?php
+$lang["About project"] = "";

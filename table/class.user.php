@@ -44,6 +44,7 @@ class user extends table
            "' WHERE id = '" . $this->id . "'");
     }
 
+    // TODO - EXPAND TO CLASS FIELDS
     public function select_by_name ($name)
     {
         return $this->select_from ("users", "name", strtolower($name));
@@ -54,7 +55,8 @@ class user extends table
         return $this->select_from ("users", "email", strtolower($email));
     }
 
-    public function select_all_users ()
+    // TODO - ???? WHERE TO PUT IT
+    public function select_all ()
     {
         return db::getDB()->select (
             "SELECT id, name, status 
