@@ -1,5 +1,6 @@
 <?php
     include "system/inc.config.php";
+    include ROOT . "system/inc.lang.php";
     include ROOT . "system/inc.fun.php";
 
     session_start();
@@ -8,6 +9,8 @@
 
     if ($_SERVER['PHP_SELF'] != "/index.php") // PHPStorm Debug Init
         $_GET ["data"] = "/shop/index";
+
+    set_lang ();
 
     function __autoload ($class)
     {

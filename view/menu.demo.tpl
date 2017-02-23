@@ -15,11 +15,26 @@
                         <li{if $arr.menu == "info/index"} class="active"{/if}>
                             <a href="/info/index" title="{$lang["HOME"]}">
                                 <i class="glyphicon glyphicon-info-sign"></i>&nbsp;&nbsp;{$lang["HOME"]}</a>
-                         </li>
+                        </li>
                         <li{if $arr.menu == "user/insert"} class="active"{/if}>
                            <a href="/user/insert" title="{$lang["JOIN"]}">
                                <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;{$lang["JOIN"]}
                             </a>
+                        </li>
+                        <li>
+                           <a href="/ru" title="По-русски">
+                               &nbsp;&nbsp;По-русски
+                           </a>
+                        </li>
+                        <li>
+                           <a href="/en" title="English">
+                               </i>&nbsp;&nbsp;English
+                           </a>
+                        </li>
+                        <li>
+                           <a href="/lt" title="По-литовски">
+                               </i>&nbsp;&nbsp;Lietuviškai
+                           </a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

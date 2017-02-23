@@ -10,9 +10,6 @@
         die ();
     }
 
-    include "lang/info.ru.php";
-    include "lang/menu.ru.php";
-
     include ROOT . "data/smarty/Smarty.class.php";
     $smart = new Smarty ();
     $smart->template_dir = SMARTY_TEMPLATES_DIR;

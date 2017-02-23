@@ -4,4 +4,7 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
+RewriteRule ^ru(.*)$ index.php?lang=ru&data=$1 [L,QSA]
+RewriteRule ^lt(.*)$ index.php?lang=lt&data=$1 [L,QSA]
+RewriteRule ^en(.*)$ index.php?lang=en&data=$1 [L,QSA]
 RewriteRule ^(.*)$ index.php?data=$1 [L,QSA]
