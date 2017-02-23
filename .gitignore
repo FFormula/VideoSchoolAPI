@@ -2,8 +2,5 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 .idea/
-log/
-templates_c/
+tmp/
 system/inc.config.php
-*.log
-data/view_c
