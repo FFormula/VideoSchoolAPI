@@ -46,7 +46,7 @@ class db
     { // TODO - RETURN FALSE ON ERROR
         $result = $this -> mi -> query ($query);
         if (!$result)
-            throw new Exception (
+            throw new \Exception (
                         "Error during query: " . 
                         $this -> mi -> error . 
                         ". Query text: " . 

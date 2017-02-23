@@ -18,12 +18,19 @@
     function include_lang ($page)
     {
         global $lang, $lg;
+        $rows = \table\db::getDB()->select (
+            "SELECT word, $lg
+               FROM langs
+              WHERE word LIKE '$page.%'");
+        foreach ($rows as $value)
+            $lang [$value ["word"]] = $value [$lg];
+        /*
         $langfile = ROOT . "lang/$page.$lg.php";
         if (file_exists ($langfile))
             include_once $langfile;
         else {
             $langfile = ROOT . "lang/$page." . LANG_DEFAULT . ".php";
             @include_once $langfile;
-        }
+        }*/
     }
 

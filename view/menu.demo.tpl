@@ -13,12 +13,12 @@
                 <div class="collapse navbar-collapse" id="MyTopMenu">
                     <ul class="nav navbar-nav">
                         <li{if $arr.menu == "info/index"} class="active"{/if}>
-                            <a href="/info/index" title="{$lang["HOME"]}">
-                                <i class="glyphicon glyphicon-info-sign"></i>&nbsp;&nbsp;{$lang["HOME"]}</a>
+                            <a href="/info/index" title="{$lang["menu.home"]}">
+                                <i class="glyphicon glyphicon-info-sign"></i>&nbsp;&nbsp;{$lang["menu.home"]}</a>
                         </li>
                         <li{if $arr.menu == "user/insert"} class="active"{/if}>
-                           <a href="/user/insert" title="{$lang["JOIN"]}">
-                               <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;{$lang["JOIN"]}
+                           <a href="/user/insert" title="{$lang["menu.join"]}">
+                               <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;{$lang["menu.join"]}
                             </a>
                         </li>
                         <li>
@@ -39,8 +39,8 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li{if $arr.menu == "user/login"} class="active"{/if}>
-                            <a href="/user/login" title="{$lang["LOGIN"]}">
-                                <i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;{$lang["LOGIN"]}
+                            <a href="/user/login" title="{$lang["menu.login"]}">
+                                <i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;{$lang["menu.login"]}
                             </a>
                         </li>
                     </ul>

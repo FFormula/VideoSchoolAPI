@@ -5,7 +5,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
     <link href="/css/driverstyle.css" rel="stylesheet">
-    <title>База Водителей</title>
+    <title>{$arr.title}</title>
 </head>
 <body>
     {include file="menu.demo.tpl"}
