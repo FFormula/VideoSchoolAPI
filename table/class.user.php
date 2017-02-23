@@ -2,7 +2,9 @@
 
 namespace table;
 
-class user extends table
+use system\resultable;
+
+class user extends resultable
 {
     public $id;
     public $name;
