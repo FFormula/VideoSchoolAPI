@@ -23,6 +23,7 @@ class page extends system\resultable
         array ("", "info/index"),
         array ("info/index", "info/index"),
         array ("user/login", "user/login"),
+        array ("user/signup", "user/signup"),
 
         array ("*", "/system/error")
     );

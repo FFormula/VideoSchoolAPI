@@ -17,7 +17,7 @@
                                 <i class="glyphicon glyphicon-info-sign"></i>&nbsp;&nbsp;{$lang["menu.home"]}</a>
                         </li>
                         <li{if $arr.menu == "user/insert"} class="active"{/if}>
-                           <a href="/user/insert" title="{$lang["menu.join"]}">
+                           <a href="/user/signup" title="{$lang["menu.join"]}">
                                <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;{$lang["menu.join"]}
                             </a>
                         </li>
