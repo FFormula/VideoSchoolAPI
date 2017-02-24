@@ -22,6 +22,7 @@ class page extends system\resultable
     (
         array ("", "info/index"),
         array ("info/index", "info/index"),
+        array ("user/login", "user/login"),
 
         array ("*", "/system/error")
     );

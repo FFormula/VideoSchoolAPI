@@ -8,10 +8,10 @@ class info extends \system\resultable
     {
         global $lang;
         include_lang ("menu");
-        include_lang ("info");
-
-        $this->array["title"] = $lang["info.bad drivers database"];
         $this->array["menu"] = "info/index";
+
+        include_lang ("info");
+        $this->array["title"] = $lang["info.bad drivers database"];
 
         return true;
     }
