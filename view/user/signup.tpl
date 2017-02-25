@@ -15,27 +15,34 @@
     }
     return true;">
             <div class="panel-body">
+            {if $err}
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{$err}</h3>
+                    </div>
+                </div>
+            {/if}
                 <div class="form-group">
                     <label class="col-md-2 control-label">{$lang["user.Park"]}:</label>
-                    <div class="col-md-10"><input type="text" name="park" class="form-control" value="php.user.park" /></div>
+                    <div class="col-md-10"><input type="text" name="park" class="form-control" value="{$arr.park}" /></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">{$lang["user.Name"]}:</label>
-                    <div class="col-md-10"><input type="text" name="name" class="form-control" value="php.user.name" /></div>
+                    <div class="col-md-10"><input type="text" name="name" class="form-control" value="{$arr.name}" /></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">{$lang["user.Phone"]}:</label>
-                    <div class="col-md-10"><input type="text" id="phone_id" name="phone" class="form-control" value="php.user.phone" placeholder="+79000000000" /></div>
+                    <div class="col-md-10"><input type="text" id="phone_id" name="phone" class="form-control" value="{$arr.phone}" placeholder="+79000000000" /></div>
                 </div>
             </div>
             <div class="panel-body bg-warning">
                 <div class="form-group">
                     <label class="col-md-2 control-label">{$lang["user.E-mail"]}:</label>
-                    <div class="col-md-10"><input type="email" name="email" class="form-control" value="php.user.email" /></div>
+                    <div class="col-md-10"><input type="email" name="email" class="form-control" value="{$arr.email}" /></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">{$lang["user.Password"]}:</label>
-                    <div class="col-md-10"><input type="text" name="password" class="form-control"  value="php.user.password" /></div>
+                    <div class="col-md-10"><input type="text" name="password" class="form-control"  value="" /></div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5 col-md-7">

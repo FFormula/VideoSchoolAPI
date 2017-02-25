@@ -9,11 +9,29 @@ class user extends resultable
     public $id;
     public $name;
     public $email;
-    public $park;
+    public $password;
     public $phone;
+    public $park;
     public $failed_logins;
     public $status;
-    public $password;
+
+    public function insert ()
+    {
+        $query =
+            "INSERT INTO users
+                SET name = '" . addslashes($this->name) . "', 
+                    email = '" . addslashes($this->email) . "', 
+                    password = '" . addslashes($this->password) . "',
+                    phone = '" . addslashes($this->phone) . "',
+                    park = '" . addslashes($this->park) . "',
+                    failed_logins = '" . addslashes ($this->failed_logins) . "',
+                    status = '" . addslashes($this->status) . "'";
+        if (!db::getDB()->query($query))
+            return $this->set_error(db::getDB()->get_error());
+
+        $this->id = db::getDB()->insert_id();
+        return true;
+    }
 
     public function select_by_email ($email)
     {
@@ -47,11 +65,11 @@ class user extends resultable
             "UPDATE users
                 SET name = '" . addslashes ($this->name) . "', 
                     email = '" . addslashes ($this->email) . "',
-                    park = '" . addslashes ($this->park) . "',
+                    password = '" . addslashes ($this->password) . "',
                     phone = '" . addslashes ($this->phone) . "',
+                    park = '" . addslashes ($this->park) . "',
                     failed_logins = '" . addslashes ($this->failed_logins) . "',
-                    status = '" . addslashes ($this->status) . "',
-                    password = '" . addslashes ($this->password) . "'
+                    status = '" . addslashes ($this->status) . "'
               WHERE id = '" . addslashes($this->id) . "'";
 
         if (!db::getDB()->query($query))
