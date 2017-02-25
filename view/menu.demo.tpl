@@ -16,7 +16,7 @@
                             <a href="/info/index" title="{$lang["menu.home"]}">
                                 <i class="glyphicon glyphicon-info-sign"></i>&nbsp;&nbsp;{$lang["menu.home"]}</a>
                         </li>
-                        <li{if $arr.menu == "user/insert"} class="active"{/if}>
+                        <li{if $arr.menu == "user/signup"} class="active"{/if}>
                            <a href="/user/signup" title="{$lang["menu.join"]}">
                                <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;{$lang["menu.join"]}
                             </a>

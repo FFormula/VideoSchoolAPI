@@ -9,60 +9,55 @@ class user extends resultable
     public $id;
     public $name;
     public $email;
+    public $park;
+    public $phone;
+    public $failed_logins;
     public $status;
-    public $passhash;
+    public $password;
 
-    public function __construct($id = "")
+    public function select_by_email ($email)
     {
-        if ($id) $this->select($id);
-    }
+        $query =
+            "SELECT id, name, email, park, phone, failed_logins, status, password
+               FROM users 
+              WHERE email = '" . addslashes ($email) . "'";
 
-    public function insert ()
-    {
-        db::getDB()->query(
-            "INSERT INTO users
-                SET name = '" . addslashes(strtolower($this->name)) .
-                "', email = '" . addslashes(strtolower($this->email)) .
-                "', status = '" . addslashes($this->status) .
-                "', passhash = '" . addslashes($this->passhash) . "'");
-        $this->id = db::getDB()->insert_id();
-    }
+        $row = db::getDB()->select_row ($query);
+        if (!$row)
+            return $this->set_error(db::getDB()->get_error());
 
-    public function select ($id)
-    {
-        if (!$id) return false;
-        return $this->select_from ("users", "id", $id);
+        if (count($row) == 0)
+            return $this->set_error ("E-mail not found");
+
+        $this->id = $row ["id"];
+        $this->name = $row ["name"];
+        $this->email = $row ["email"];
+        $this->park = $row ["park"];
+        $this->phone = $row ["phone"];
+        $this->failed_logins = $row ["failed_logins"];
+        $this->status = $row ["status"];
+        $this->password = $row ["password"];
+
+        return true;
     }
 
     public function update ()
     {
-        if (!$this->id) return;
-        db::getDB()->query(
+        $query =
             "UPDATE users
-                SET name = '" . addslashes(strtolower($this->name)) .
-                "', email = '" . addslashes(strtolower($this->email)) .
-                "', status = '" . addslashes($this->status) .
-                "', passhash = '" . addslashes($this->passhash) .
-           "' WHERE id = '" . $this->id . "'");
+                SET name = '" . addslashes ($this->name) . "', 
+                    email = '" . addslashes ($this->email) . "',
+                    park = '" . addslashes ($this->park) . "',
+                    phone = '" . addslashes ($this->phone) . "',
+                    failed_logins = '" . addslashes ($this->failed_logins) . "',
+                    status = '" . addslashes ($this->status) . "',
+                    password = '" . addslashes ($this->password) . "'
+              WHERE id = '" . addslashes($this->id) . "'";
+
+        if (!db::getDB()->query($query))
+            return $this->set_error(db::getDB()->get_error());
+
+        return true;
     }
 
-    // TODO - EXPAND TO CLASS FIELDS
-    public function select_by_name ($name)
-    {
-        return $this->select_from ("users", "name", strtolower($name));
-    }
-
-    public function select_by_email ($email)
-    {
-        return $this->select_from ("users", "email", strtolower($email));
-    }
-
-    // TODO - ???? WHERE TO PUT IT
-    public function select_all ()
-    {
-        return db::getDB()->select (
-            "SELECT id, name, status 
-               FROM users 
-           ORDER BY id");
-    }
 }

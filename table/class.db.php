@@ -2,7 +2,9 @@
 
 namespace table;
 
-class db
+use system\resultable;
+
+class db extends resultable
 {
     private $mi;
 
@@ -25,15 +27,17 @@ class db
     protected function connect() 
     {
         if (isset($this -> mi))
-            return;
+            return true;
 
 //      echo "  host: " . DB_HOST . ", user: " . DB_USER . ", base: " . DB_BASE . ", " . DB_PASS;
         $this -> mi = new \MySQLi(DB_HOST, DB_USER, DB_PASS, DB_BASE);
 
         if ($this -> mi -> connect_errno)
-            throw new Exception (
-                        "Error connecting to database: " . 
-                        $this -> mi -> connect_error); 
+            return $this->set_error(
+                        "Error connecting to database: " .
+                        $this -> mi -> connect_error);
+
+        return true;
     }
 
     /**
@@ -43,14 +47,12 @@ class db
      * @throws Exception on MySQL error with query and error message
      */
     public function query ($query) 
-    { // TODO - RETURN FALSE ON ERROR
+    {
         $result = $this -> mi -> query ($query);
         if (!$result)
-            throw new \Exception (
-                        "Error during query: " . 
-                        $this -> mi -> error . 
-                        ". Query text: " . 
-                        $query);
+            return $this->set_error(
+                "Error during query: " . $this -> mi -> error .
+                ". Query text: " . $query);
         return $result;
     }
 
@@ -59,10 +61,11 @@ class db
      * @param $query The query string
      * @return array database rows on success
      */
-    public function select ($query) 
+    public function select_all ($query)
     {
-        $result = $this -> query ($query);
-        $rows = array();
+        if (!($result = $this -> query ($query)))
+            return false;
+        $rows = [];
         while ($row = $result -> fetch_assoc())
             $rows[] = $row;
         return $rows;
@@ -76,9 +79,10 @@ class db
      */
     public function select_row ($query)
     {
-        $result = $this -> query ($query);
-        if (mysqli_num_rows($result) == 0)
+        if (!($result = $this -> query ($query)))
             return false;
+        if (mysqli_num_rows($result) == 0)
+            return [];
         return $result -> fetch_assoc();
     }
 
@@ -90,9 +94,10 @@ class db
      */
     public function scalar ($query) 
     {
-        $result = $this -> query ($query);
-        if (mysqli_num_rows($result) == 0)
+        if (!($result = $this -> query ($query)))
             return false;
+        if (mysqli_num_rows($result) == 0)
+            return "";
         $res = $result -> fetch_array();
         return $res [0];
     }

@@ -3,6 +3,7 @@ php_flag display_errors on
 RewriteEngine on 
 
 RewriteRule ^(js|css|img|fonts)/ - [S=9]
+RewriteRule ^api\.php - [S=9]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

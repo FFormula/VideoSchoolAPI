@@ -32,6 +32,7 @@ class page extends system\resultable
     {
         $this->init_parts();
         $this->init_route();
+        $this->init_langs();
     }
 
     public function run ()
@@ -88,6 +89,13 @@ class page extends system\resultable
         $this->init_args($path);
 
         list ($this->class, $this->method) = explode("/", $rule [1]);
+    }
+
+    private function init_langs ()
+    {
+        global $lang;
+        include_lang ("menu");
+        include_lang ($this->class);
     }
 
     private function find_route ()

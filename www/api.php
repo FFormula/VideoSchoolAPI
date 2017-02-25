@@ -1,5 +1,5 @@
 <?php
-    include "system/inc.header.php";
+    include "../system/inc.header.php";
 
     $api = new run\api();
 
