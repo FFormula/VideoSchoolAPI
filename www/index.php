@@ -15,6 +15,7 @@
     $smart->template_dir = SMARTY_TEMPLATES_DIR;
     $smart->assign("arr", $page->get_array());
     $smart->assign("err", $page->get_error());
+    $lang = \system\lang::get();
     $smart->assign("lang", $lang);
     $view_file = $page->get_class() . "/" . $page->get_method() . ".tpl";
     //echo $view_file . "<br>";

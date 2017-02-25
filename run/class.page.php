@@ -3,6 +3,7 @@
 namespace run;
 
 use \system;
+use \system\lang;
 
 class page extends system\resultable
 {
@@ -93,9 +94,9 @@ class page extends system\resultable
 
     private function init_langs ()
     {
-        global $lang;
-        include_lang ("menu");
-        include_lang ($this->class);
+        lang::get()->word("text");
+        lang::get()->load_page ("menu");
+        lang::get()->load_page ($this->class);
     }
 
     private function find_route ()

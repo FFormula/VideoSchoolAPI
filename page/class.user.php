@@ -2,13 +2,16 @@
 
 namespace page;
 
+use \system\lang;
+
 class user extends \system\resultable
 {
     public function login ()
     {
-        global $lang;
+        echo "#";
+        echo lang::get()->word("user.login.title.user login page") . "#";
         $this->array["menu"] = "user/login";
-        $this->array["title"] = $lang["user.login.title.user login page"];
+        $this->array["title"] = lang::get()->word("user.login.title.user login page");
         $this->array["email"] = "";
         return true;
     }
@@ -25,9 +28,8 @@ class user extends \system\resultable
 
     public function signup ()
     {
-        global $lang;
         $this->array["menu"] = "user/signup";
-        $this->array["title"] = $lang["user.signup.title.user signup page"];
+        $this->array["title"] = lang::get()->word("user.signup.title.user signup page");
         $this->array["name"] = "";
         $this->array["email"] = "";
         $this->array["phone"] = "";
@@ -37,7 +39,6 @@ class user extends \system\resultable
 
     public function signup_post ($get, $post)
     {
-        global $lang;
         $this->signup();
         $this->array["name"] = $post ["name"];
         $this->array["email"] = $post ["email"];

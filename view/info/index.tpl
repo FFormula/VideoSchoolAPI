@@ -19,11 +19,11 @@
 <div class="container">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title">{$lang["info.bad drivers database"]}</h3>
+            <h3 class="panel-title">{$lang->word("info.bad drivers database")}</h3>
         </div>
         <div class="panel-body">
-            <h3>{$lang["info.project mission"]}</h3>
-            {$lang["info.project description"]}
+            <h3>{$lang->word("info.project mission")}</h3>
+            {$lang->word("info.project description")}
         </div>
     </div>
     <br/><br/>

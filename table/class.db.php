@@ -2,14 +2,14 @@
 
 namespace table;
 
-use system\resultable;
+use \system\resultable;
 
 class db extends resultable
 {
     private $mi;
 
     private static $instance = null;
-    public static function getDB()
+    public static function get()
     {
         if (!isset(static::$instance))
             static::$instance = new db ();
@@ -97,7 +97,7 @@ class db extends resultable
         if (!($result = $this -> query ($query)))
             return false;
         if (mysqli_num_rows($result) == 0)
-            return "";
+            return false;
         $res = $result -> fetch_array();
         return $res [0];
     }

@@ -26,10 +26,10 @@ class user extends resultable
                     park = '" . addslashes($this->park) . "',
                     failed_logins = '" . addslashes ($this->failed_logins) . "',
                     status = '" . addslashes($this->status) . "'";
-        if (!db::getDB()->query($query))
-            return $this->set_error(db::getDB()->get_error());
+        if (!db::get()->query($query))
+            return $this->set_error(db::get()->get_error());
 
-        $this->id = db::getDB()->insert_id();
+        $this->id = db::get()->insert_id();
         return true;
     }
 
@@ -40,9 +40,9 @@ class user extends resultable
                FROM users 
               WHERE email = '" . addslashes ($email) . "'";
 
-        $row = db::getDB()->select_row ($query);
+        $row = db::get()->select_row ($query);
         if (!$row)
-            return $this->set_error(db::getDB()->get_error());
+            return $this->set_error(db::get()->get_error());
 
         if (count($row) == 0)
             return $this->set_error ("E-mail not found");
@@ -72,8 +72,8 @@ class user extends resultable
                     status = '" . addslashes ($this->status) . "'
               WHERE id = '" . addslashes($this->id) . "'";
 
-        if (!db::getDB()->query($query))
-            return $this->set_error(db::getDB()->get_error());
+        if (!db::get()->query($query))
+            return $this->set_error(db::get()->get_error());
 
         return true;
     }
