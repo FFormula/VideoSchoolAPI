@@ -7,10 +7,18 @@
         </div>
         <div class="panel-body">
 
+            {if $err}
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{$err}</h3>
+                    </div>
+                </div>
+            {/if}
+
             <form class="form-horizontal" method="post">
                 <div class="form-group">
                     <label class="col-md-2 control-label">{$lang["user.E-mail"]}:</label>
-                    <div class="col-md-10"><input type="text" name="email" class="form-control" value="" /></div>
+                    <div class="col-md-10"><input type="text" name="email" class="form-control" value="{$arr.email}" /></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">{$lang["user.Password"]}:</label>

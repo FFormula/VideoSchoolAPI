@@ -9,12 +9,14 @@ class user extends \system\resultable
         global $lang;
         $this->array["menu"] = "user/login";
         $this->array["title"] = $lang["user.login.title.user login page"];
+        $this->array["email"] = "";
         return true;
     }
 
     public function login_post ($get, $post)
     {
         $this->login();
+        $this->array["email"] = $post ["email"];
         $api_user = new \api\user();
         if (!$api_user->do_login($post))
             return $this->set_error($api_user->get_error());

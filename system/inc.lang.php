@@ -18,7 +18,7 @@
     function include_lang ($page)
     {
         global $lang, $lg;
-        $rows = \table\db::getDB()->select (
+        $rows = \table\db::getDB()->select_all (
             "SELECT word, $lg
                FROM langs
               WHERE word LIKE '$page.%'");
