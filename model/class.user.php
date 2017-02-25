@@ -16,32 +16,41 @@ class user extends resultable
     public function login ($email, $password)
     {
         $table_user = new table\user();
+
         if (!$table_user->select_by_email($email))
             return $this->set_error("email not found");
-//        if ($table_user->passhash != $this->hash_password($user->name, $password))
-//            return $this->set_error("invalid password");
-        if ($table_user->failed_logins >= 5)
-            return $this->set_error("Account has been blocked. Too many incorrect authorizations");
 
-        if ($table_user->password != $password)
+        if ($table_user->failed_logins >= 5)
+            return $this->set_error("Account has been blocked: too many incorrect authorizations");
+
+        if ($table_user->password != $this->get_passhash($email, $password))
         {
             $table_user->failed_logins ++;
             $table_user->update();
             return $this->set_error("invalid password");
         }
+
         if ($table_user->failed_logins > 0)
         {
             $table_user->failed_logins = 0;
             $table_user->update();
         }
+
         if ($table_user->status == "stop")
             return $this->set_error("user account has been blocked");
+
         if ($table_user->status == "wait")
             return $this->set_error("please wait for approving by admin");
+
         if (!in_array ($table_user->status, ["user", "moder", "admin"]))
             return $this->set_error("unknown user status");
 
         return $this->ok();
+    }
+
+    private function get_passhash ($email, $password)
+    {
+        return sha1($email . "/" . $password);
     }
 
 }
